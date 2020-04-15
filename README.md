@@ -3,7 +3,7 @@ PhantomSpawnControl
 A Premium Resource by Alex_qp.
 ------------------------------
 
-PhantomSpawnControl is a Minecraft Plugin designed to enhance the phantom spawning and to give server owners more control over spawning conditions, strength and lootTable of a phantom. This repository is mainly to provide a wiki for all those who purchased the plugin on Spigot.
+PhantomSpawnControl is a Minecraft plugin designed to enhance the phantom spawning and to give server owners more control over spawning conditions, strength and lootTable of a phantom. This repository is mainly to provide a wiki for all those who purchased the plugin on Spigot.
 
 
 Information
