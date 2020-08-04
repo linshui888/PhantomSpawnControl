@@ -1,0 +1,123 @@
+# PhantomSpawnControl by Alex_qp
+# This plugin provides the ability to control phantom spawning.
+# Please leave a review after a while to help me improve my plugins!
+
+phantom_spawn:
+  # If set to true phantoms are able to spawn.
+  enable: true
+
+  # If set to true phantoms will get different stats (size, health, speed, etc.) based on giantPhantomsConfiguration.yml and the score of the target player.
+  giant_phantoms: true
+
+  # Configure in which worlds phantoms are able to spawn.
+  world_configuration:
+    # Phantoms will be able to spawn in all worlds with enabled environments unless the specific world is disabled down below.
+    enabled_environments:
+      normal: true
+      nether: false
+      the_end: false
+    # No phantom will ever spawn in the listed worlds regardless of any other conditions.
+    disabled_worlds:
+    # - ...
+
+  # Several other spawning conditions.
+  spawning_conditions:
+    # If set to true a phantom will never spawn within a block.
+    check_air_spawnpoint: true
+    # Until what light level should phantoms be able to spawn?
+    max_light_level: 7
+    # Phantoms may spawn in packs. What should be the maximal amount of phantoms in one pack?
+    max_group_size: 4
+    # This will multiply the spawn chance of the vanilla MC formula in order to in- or decrease spawning. The vanilla formula is: spawn-chance = (x - 3) / x where x is the amount of days since no rest.
+    spawn_chance_multiplier: 1.0
+
+    # For each world a timer will check each player for phantom spawning. How long should it be delayed before the next attempt?
+    spawn_attempts:
+      min_delay: 1200
+      max_delay: 2400
+
+    # Spawning conditions regarding the whole world.
+    world:
+      # Does it has to be night-time in order to spawn phantoms? This will only affect normal worlds (because there is no "day" in nether, the_end)
+      must_be_night: true
+      # No phantom within the protection radius of spawn will be able to spawn.
+      spawn_protection_radius: 0
+
+    # Spawning conditions regarding the target player.
+    player:
+      # Does the player have to be above sea level?
+      above_sea_level: true
+      # For what radius should a player's spawning point (i. e. his bed) protect him from phantom spawning?
+      bed_protection_radius: 100.0
+      # If a player is in one of the enabled gamemodes no phantom will spawn.
+      spawnblocking_gamemodes:
+        adventure: false
+        creative: true
+        spectator: true
+        survival: false
+
+      # Options regarding the score (time since rest).
+      score:
+        # Until what score should no phantom be able to spawn? Score increases every tick but resets by vanilla if the player enters a bed or dies.
+        min_score: 72000
+        # If a player changes to an enabled gamemode his score will reset. This can be deactivated for specific players by permissions, please see the plugin's page for more information.
+        reset_gamemodes:
+          adventure: true
+          creative: false
+          spectator: false
+          survival: true
+
+      # If phantoms spawned for a player, how long should he be protected from another spawn?
+      spawn_cooldown:
+        min: 100
+        max: 1000
+
+      # Options regarding blocks above a player.
+      # Please note that all block lists require material names. All available materials are listed here: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html. Do not use legacy materials. Also if asked for blocks you should use block-materials.
+      blocks:
+        # Should phantoms spawn if the target player stands under a solid block?
+        no_solid_above: true
+        # Which solid blocks should be ignored in the check above?
+        ignored_solid:
+        # - ...
+        # Which blocks should stop spawning if above the target player?
+        add_blocks:
+        # - ...
+
+        # Configure for which worlds block-conditions should be checked.
+        worlds:
+          enabled_environments:
+            normal: true
+            nether: false
+            the_end: true
+          disabled_worlds:
+          # - ...
+      # Options regarding essentials (Essentials aka. EssentialsX must be installed).
+      essentials:
+        # Should phantoms spawn for afk players?
+        afk_protection: false
+        # Should a vanished player spawn phantoms?
+        vanish_protection: false
+
+    # Options regarding worldguard (WorldGuard must be installed).
+    worldguard:
+      # Should phantoms only spawn in regions that allow mob-spawn?
+      check_flags: false
+
+# Set to true if playerdata should be saved beyond logout / server restart. Currently this just affects data deactivating phantom spawning with the toggle command. (v3.0.0)
+save_playerdata: true
+
+# Set to true if no phantom should be able to target a player who deactivated phantom spawning by command.
+playerdata_prevent_targeting: false
+
+# Configure nearly all messages.
+messages:
+  cmd:
+    credits: "Use /psc help for all available commands."
+    noPerm: "&4You do not have permission."
+    wrongCmdUsagePrefix: "&CUsage:"
+    toggle:
+      help: "toggles phantom spawning"
+      enable: "&2Phantom spawning was activated for you."
+      disable: "&4Phantom spawning was deactivated for you."
+# Additional credits: The idea for the giant_phantoms feature is inspired by Xisumavoid's vanilla tweak data pack.

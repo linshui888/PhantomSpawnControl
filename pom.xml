@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.alexqp</groupId>
+    <artifactId>phantomspawncontrol-parent</artifactId>
+    <version>4.2.0</version>
+    <name>PhantomSpawnControl</name>
+    <url>https://www.spigotmc.org/members/alex_qp.306806/</url>
+    <description>This plugin provides the ability to control phantom spawning.</description>
+    <packaging>pom</packaging>
+    <properties>
+        <buildNo/>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <modules>
+        <module>psc_core</module>
+        <module>psc_dist</module>
+        <module>psc_craftbukkit_1_13_R2</module>
+        <module>psc_craftbukkit_1_13_R1</module>
+        <module>psc_craftbukkit_1_14_R1</module>
+        <module>psc_craftbukkit_1_15_R1</module>
+        <module>psc_craftbukkit_1_16_R1</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>bungeecord-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+        <!-- Commons Code Integration Repo  -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <!-- Essentials Repo  -->
+        <repository>
+            <id>ess-repo</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
+        <!-- WorldGuard Repo -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+    </repositories>
+</project>

@@ -1,0 +1,137 @@
+main: com.github.alexqp.phantomspawncontrol.main.PhantomSpawnControl
+name: ${project.parent.name}
+version: ${project.parent.version}
+author: alexqp
+description: ${project.parent.description}
+api-version: "1.16"
+website: ${project.parent.url}
+softdepend: [Essentials, WorldGuard]
+
+commands:
+  phantomspawncontrol:
+    description: All commands.
+    aliases: [psc]
+
+permissions:
+  phantomspawncontrol.*:
+    description: Grants all permissions.
+    default: false
+    children:
+      phantomspawncontrol.stopreset: true
+      phantomspawncontrol.stopspawn: true
+      phantomspawncontrol.cmd.*: true
+
+  phantomspawncontrol.stopreset:
+    description: Stops reset of time_since_rest
+    default: false
+  phantomspawncontrol.stopspawn:
+    description: Disables phantom-spawning for the specific player.
+    default: false
+
+  phantomspawncontrol.cmd.*:
+    description: Grants access to all commands.
+    default: false
+    children:
+      phantomspawncontrol.cmd.reload: true
+      phantomspawncontrol.cmd.toggle: true
+      phantomspawncontrol.cmd.giantphantoms.*: true
+      phantomspawncontrol.cmd.loottables.*: true
+
+  phantomspawncontrol.cmd.reload:
+    description: Grants access to the reload command.
+    default: op
+
+  phantomspawncontrol.cmd.toggle:
+    description: Grants access to the toggle command.
+    default: op
+
+
+
+  phantomspawncontrol.cmd.giantPhantoms.*:
+    description: Grants access all giantPhantoms commands.
+    default: false
+    children:
+      phantomspawncontrol.cmd.giantphantoms: true
+      phantomspawncontrol.cmd.giantphantoms.list: true
+      phantomspawncontrol.cmd.giantphantoms.add: true
+      phantomspawncontrol.cmd.giantphantoms.remove: true
+      phantomspawncontrol.cmd.giantphantoms.summon: true
+      phantomspawncontrol.cmd.giantphantoms.set.*: true
+
+  phantomspawncontrol.cmd.giantphantoms:
+    description: Grants access to the giantPhantoms command.
+    default: op
+
+  phantomspawncontrol.cmd.giantphantoms.list:
+    description: Grants access to the giantPhantoms list command.
+    default: op
+
+  phantomspawncontrol.cmd.giantphantoms.add:
+    description: Grants access to the giantPhantoms add command.
+    default: op
+
+  phantomspawncontrol.cmd.giantphantoms.remove:
+    description: Grants access to the giantPhantoms remove command.
+    default: op
+
+  phantomspawncontrol.cmd.giantphantoms.summon:
+    description: Grants access to the giantPhantoms summon command.
+    default: op
+
+
+  phantomspawncontrol.cmd.giantphantoms.set.*:
+    description: Grants access to all giantPhantoms set commands.
+    default: false
+    children:
+      phantomspawncontrol.cmd.giantphantoms.set: true
+      phantomspawncontrol.cmd.giantphantoms.set.stats: true
+      phantomspawncontrol.cmd.giantphantoms.set.loottable: true
+
+  phantomspawncontrol.cmd.giantphantoms.set:
+    description: Grants access to the giantPhantoms set command.
+    default: op
+
+  phantomspawncontrol.cmd.giantphantoms.set.stats:
+    description: Grants access to the giantPhantoms set stats command.
+    default: op
+
+  phantomspawncontrol.cmd.giantphantoms.set.loottable:
+    description: Grants access to all giantPhantoms set lootTable commands.
+    default: op
+
+
+
+  phantomspawncontrol.cmd.loottables.*:
+    description: Grants access to all lootTable commands.
+    default: false
+    children:
+      phantomspawncontrol.cmd.loottables: true
+      phantomspawncontrol.cmd.loottables.list: true
+      phantomspawncontrol.cmd.loottables.add: true
+      phantomspawncontrol.cmd.loottables.remove: true
+      phantomspawncontrol.cmd.loottables.populate: true
+      phantomspawncontrol.cmd.loottables.edit: true
+
+  phantomspawncontrol.cmd.loottables:
+    description: Grants access to the lootTables command.
+    default: op
+
+  phantomspawncontrol.cmd.loottables.list:
+    description: Grants access to the lootTables list command.
+    default: op
+
+  phantomspawncontrol.cmd.loottables.add:
+    description: Grants access to the lootTables add command.
+    default: op
+
+  phantomspawncontrol.cmd.loottables.remove:
+    description: Grants access to the lootTables remove command.
+    default: op
+
+  phantomspawncontrol.cmd.loottables.populate:
+    description: Grants access to the lootTables populate command.
+    default: op
+
+  phantomspawncontrol.cmd.loottables.edit:
+    description: Grants access to all lootTables edit commands.
+    default: op
