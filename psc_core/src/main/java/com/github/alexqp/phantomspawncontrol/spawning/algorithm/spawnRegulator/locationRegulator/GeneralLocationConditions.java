@@ -42,7 +42,7 @@ public class GeneralLocationConditions implements LocationSpawnRegulator {
             boolean checkAirResult = true;
             if (checkAir) {
                 checkAirResult = scheduler.callSyncMethod(plugin, () -> {
-                    if (checkAir && !loc.getBlock().getType().equals(Material.AIR)) {
+                    if (!loc.getBlock().getType().equals(Material.AIR)) {
                         ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(loc, "not an air block."));
                         return false;
                     }
