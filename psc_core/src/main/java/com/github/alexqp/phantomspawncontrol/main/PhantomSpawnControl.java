@@ -35,11 +35,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
 
     /*
      * Changelog v4.1.0:
-     * Added: WorldGuard support
-     *
-     * Changed: improved spawning algorithm performance
-     *
-     * Fixed: block check was not skipped if noSolidAbove == false and no added blocks
+     * Fixed: phantom_spawn.world options were not considered.
      * // TODO
      *     - if players sleep under direct sky access, phantoms have a chance to spawn based on their score * some multiplier (they get kicked out of the bed)
      *              -> make another class (BedListener) to hook into SpawnAlgorithm#getSpawnLocations <- without SpawnConditions-Checking!
