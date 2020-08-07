@@ -5,6 +5,7 @@ import com.github.alexqp.commons.config.ConsoleErrorType;
 import com.github.alexqp.commons.messages.ConsoleMessage;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsContainer;
 import com.github.alexqp.phantomspawncontrol.data.player.PlayerStatsContainer;
+import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.locationRegulator.WorldConditions;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.playerRegulator.PlayerConditionsBuilder;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.PlayerSpawnRegulator;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.SpawnRegulatorHandler;
@@ -52,7 +53,8 @@ public class SpawnAlgorithmAsync extends SpawnRegulatorHandler {
                     spawnChanceMultiplier, spawnAttemptDelay, phantomStatsContainer);
 
             // location regulator....
-            algorithm.addSpawnRegulator(plugin, GeneralLocationConditions.build(plugin, rootSection))
+            algorithm.addSpawnRegulator(plugin, WorldConditions.build(plugin, rootSection))
+                    .addSpawnRegulator(plugin, GeneralLocationConditions.build(plugin, rootSection))
                     .addSpawnRegulator(plugin, WorldGuardConditions.build(plugin, rootSection));
 
             // player regulator...

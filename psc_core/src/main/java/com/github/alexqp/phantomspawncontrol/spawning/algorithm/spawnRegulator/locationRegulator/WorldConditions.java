@@ -1,8 +1,9 @@
-package com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator;
+package com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.locationRegulator;
 
 import com.github.alexqp.commons.config.ConfigChecker;
 import com.github.alexqp.commons.config.ConsoleErrorType;
 import com.github.alexqp.commons.messages.ConsoleMessage;
+import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.LocationSpawnRegulator;
 import com.github.alexqp.phantomspawncontrol.utility.SpawnCancelMsg;
 import com.google.common.collect.Range;
 import org.bukkit.Bukkit;
@@ -12,17 +13,22 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.ExecutionException;
 
 public class WorldConditions implements LocationSpawnRegulator {
 
-    @NotNull
+    @Nullable
     public static WorldConditions build(final @NotNull JavaPlugin plugin, final @NotNull ConfigurationSection rootSection) {
         ConfigChecker configChecker = new ConfigChecker(plugin);
-        boolean checkAir = configChecker.checkBoolean(rootSection, "must_be_night", ConsoleErrorType.WARN, true);
-        double spawnProtectionRadius = configChecker.checkDouble(rootSection, "spawn_protection_radius", ConsoleErrorType.WARN, 0, Range.atLeast(0.0));
-        return new WorldConditions(checkAir, Math.pow(spawnProtectionRadius, 2));
+        ConfigurationSection worldSection = configChecker.checkConfigSection(rootSection, "world", ConsoleErrorType.ERROR);
+        if (worldSection != null) {
+            boolean checkAir = configChecker.checkBoolean(rootSection, "must_be_night", ConsoleErrorType.WARN, true);
+            double spawnProtectionRadius = configChecker.checkDouble(rootSection, "spawn_protection_radius", ConsoleErrorType.WARN, 0, Range.atLeast(0.0));
+            return new WorldConditions(checkAir, Math.pow(spawnProtectionRadius, 2));
+        }
+        return null;
     }
 
     boolean mustBeNight;
