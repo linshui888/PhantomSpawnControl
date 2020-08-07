@@ -1,4 +1,4 @@
-package com.github.alexqp.phantomspawncontrol.spawning.algorithm.player;
+package com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.playerRegulator;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;

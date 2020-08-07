@@ -1,4 +1,4 @@
-package com.github.alexqp.phantomspawncontrol.spawning.algorithm.player;
+package com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.playerRegulator;
 
 import com.github.alexqp.commons.config.ConfigChecker;
 import com.github.alexqp.commons.config.ConsoleErrorType;
@@ -47,11 +47,6 @@ public class GeneralPlayerConditions implements PlayerSpawnRegulator, Listener {
             GeneralPlayerConditions instance = new GeneralPlayerConditions(plugin, mustBeAboveSea, bedProtectionRadius, spawnBlockGameModes, spawnCooldown);
             Bukkit.getPluginManager().registerEvents(instance, plugin);
 
-            // easier checkable conditions should be added first. // TODO remove (and see below)
-            /*instance.addSpawnConditionsHandler(SpawnConditionsPlayerScore.build(plugin, playerSection, scoreObjective, spawnAlgorithm));
-            instance.addSpawnConditionsHandler(SpawnConditionsPlayerEssentials.build(plugin, playerSection));
-            instance.addSpawnConditionsHandler(SpawnConditionsPlayerBlock.build(plugin, playerSection));*/
-
             return instance;
         }
 
@@ -67,7 +62,6 @@ public class GeneralPlayerConditions implements PlayerSpawnRegulator, Listener {
 
     private int[] spawnCooldown; // {min, max}
 
-    //private Set<SpawnConditionsHandler> spawnConditionsHandlers = new LinkedHashSet<>(); // keeps order
 
     private GeneralPlayerConditions(@NotNull JavaPlugin plugin, boolean mustBeAboveSea, double bedProtectionRadius, @NotNull Set<GameMode> spawnBlockGameModes, int[] spawnCooldown) {
 
@@ -78,15 +72,6 @@ public class GeneralPlayerConditions implements PlayerSpawnRegulator, Listener {
         this.spawnCooldown = spawnCooldown;
         this.spawnBlockGameModes = spawnBlockGameModes;
     }
-
-    /*private void addSpawnConditionsHandler(@Nullable SpawnConditionsHandler handler) {
-        if (handler == null) {
-            ConsoleMessage.debug(this.getClass(), plugin, "Did not add SpawnConditionsHandler because it was null.");
-            return;
-        }
-        this.spawnConditionsHandlers.add(handler);
-        ConsoleMessage.debug(this.getClass(), plugin, "Added SpawnConditionsHandler " + handler.getClass().getSimpleName());
-    }*/
 
     private int getRandomSpawnCooldown() {
         return ThreadLocalRandom.current().nextInt(spawnCooldown[0], spawnCooldown[1] + 1);
@@ -128,35 +113,6 @@ public class GeneralPlayerConditions implements PlayerSpawnRegulator, Listener {
         }
         return false;
     }
-
-    /*@Override
-    public boolean shouldSpawn(final Player p, final JavaPlugin plugin) {
-
-        if (spawnBlockGameModes.contains(p.getGameMode())) {
-            ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(p, "GameMode"));
-            return false;
-        }
-
-        World world = p.getWorld();
-
-        if (mustBeAboveSea && world.getSeaLevel() > p.getLocation().getY()) {
-            ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(p, "SeaLevel"));
-            return false;
-        }
-
-        Location bedSpawnLoc = p.getBedSpawnLocation();
-        if (bedSpawnLoc != null && world.equals(bedSpawnLoc.getWorld()) && p.getLocation().distanceSquared(bedSpawnLoc) < bedProtectionRadiusSquared) {
-            ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(p, "BedSpawnProtection"));
-            return false;
-        }
-
-        for (SpawnConditionsHandler handler : spawnConditionsHandlers) {
-            if (!handler.shouldSpawn(p, plugin))
-                return false;
-        }
-
-        return true;
-    }*/
 
     @EventHandler
     public void onPhantomPackSpawn(PhantomPackSpawnEvent e) {

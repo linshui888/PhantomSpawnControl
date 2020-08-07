@@ -1,4 +1,4 @@
-package com.github.alexqp.phantomspawncontrol.spawning.algorithm.player;
+package com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.playerRegulator;
 
 import com.github.alexqp.commons.config.ConfigChecker;
 import com.github.alexqp.commons.config.ConsoleErrorType;
