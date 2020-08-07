@@ -129,6 +129,7 @@ public class SpawnRunnableAsync extends BukkitRunnable {
                 Player p = Bukkit.getPlayer(playerUUID);
                 if (p == null) {
                     ConsoleMessage.debug(this.getClass(), plugin, "Could not proceed with spawning because player is null while spawning. Stopping runnable...");
+                    sendStopDebug();
                     return;
                 }
 
