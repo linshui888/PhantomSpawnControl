@@ -111,7 +111,6 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
         ConsoleMessage.debug((Debugable) this, "Re-Enabling the plugin...");
 
         this.onRealEnable();
-
     }
 
     private void onRealEnable() {
