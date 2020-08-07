@@ -53,13 +53,14 @@ public class SpawnRegulatorHandler {
     }
 
     public boolean computeSpawnRegulatorAsync(@NotNull Player p, @NotNull final JavaPlugin plugin) {
-        ConsoleMessage.debug(this.getClass(), plugin, "Start computing PlayerSpawnRegulator for Player " + ConsoleMessage.getPlayerString(p) + "...");
+        ConsoleMessage.debug(this.getClass(), plugin, "Start computing PlayerSpawnRegulator for player " + ConsoleMessage.getPlayerString(p) + "...");
         for (PlayerSpawnRegulator regulator : playerSpawnRegulators) {
             if (!regulator.shouldSpawnAsync(p, plugin)) {
                 ConsoleMessage.debug(this.getClass(), plugin, "PlayerSpawnRegulator " + regulator.getClass().getSimpleName() + " stopped Spawning for Player " + ConsoleMessage.getPlayerString(p));
                 return false;
             }
         }
+        ConsoleMessage.debug(this.getClass(), plugin, "Finished computing PlayerSpawnRegulator for player " + ConsoleMessage.getPlayerString(p) + ".");
         return true;
     }
 }
