@@ -24,8 +24,8 @@ public class WorldConditions implements LocationSpawnRegulator {
         ConfigChecker configChecker = new ConfigChecker(plugin);
         ConfigurationSection worldSection = configChecker.checkConfigSection(rootSection, "world", ConsoleErrorType.ERROR);
         if (worldSection != null) {
-            boolean checkAir = configChecker.checkBoolean(rootSection, "must_be_night", ConsoleErrorType.WARN, true);
-            double spawnProtectionRadius = configChecker.checkDouble(rootSection, "spawn_protection_radius", ConsoleErrorType.WARN, 0, Range.atLeast(0.0));
+            boolean checkAir = configChecker.checkBoolean(worldSection, "must_be_night", ConsoleErrorType.WARN, true);
+            double spawnProtectionRadius = configChecker.checkDouble(worldSection, "spawn_protection_radius", ConsoleErrorType.WARN, 0, Range.atLeast(0.0));
             return new WorldConditions(checkAir, Math.pow(spawnProtectionRadius, 2));
         }
         return null;
