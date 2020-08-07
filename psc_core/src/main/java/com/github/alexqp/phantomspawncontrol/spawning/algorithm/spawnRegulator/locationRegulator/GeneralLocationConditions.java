@@ -29,7 +29,7 @@ public class GeneralLocationConditions implements LocationSpawnRegulator {
     private boolean checkAir;
     private int maxLightLevel;
 
-    public GeneralLocationConditions(boolean checkAir, int maxLightLevel) {
+    private GeneralLocationConditions(boolean checkAir, int maxLightLevel) {
         this.checkAir = checkAir;
         this.maxLightLevel = maxLightLevel;
     }
