@@ -120,4 +120,5 @@ messages:
       help: "toggles phantom spawning"
       enable: "&2Phantom spawning was activated for you."
       disable: "&4Phantom spawning was deactivated for you."
+
 # Additional credits: The idea for the giant_phantoms feature is inspired by Xisumavoid's vanilla tweak data pack.

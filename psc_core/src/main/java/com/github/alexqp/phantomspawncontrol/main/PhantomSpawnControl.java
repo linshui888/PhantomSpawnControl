@@ -34,12 +34,13 @@ import java.util.logging.Level;
 public class PhantomSpawnControl extends JavaPlugin implements Debugable {
 
     /*
-     * Changelog v4.1.0:
-     * Fixed: phantom_spawn.world options were not considered.
+     * Changelog v4.1.0+:
+     * Fixed: default config was not reloaded by command.
      * // TODO
      *     - if players sleep under direct sky access, phantoms have a chance to spawn based on their score * some multiplier (they get kicked out of the bed)
      *              -> make another class (BedListener) to hook into SpawnAlgorithm#getSpawnLocations <- without SpawnConditions-Checking!
      *     - soft-depend TimeControl to determine day-worlds/time
+     *     - ESSENTIALS: /rest command support?
      */
 
     private static final String[] scoreboardNames = {"PLUGIN_PSC", "minecraft.custom:minecraft.time_since_rest"};
@@ -111,6 +112,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
 
     private void onRealEnable() {
         this.saveDefaultConfig();
+        this.reloadConfig();
         this.checkDebugMode();
 
         ConfigChecker configChecker = new ConfigChecker(this);
