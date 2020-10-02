@@ -19,10 +19,11 @@ permissions:
     children:
       phantomspawncontrol.stopreset: true
       phantomspawncontrol.stopspawn: true
+      phantomspawncontrol.defaultplayerdata: true
       phantomspawncontrol.cmd.*: true
 
   phantomspawncontrol.stopreset:
-    description: Stops reset of time_since_rest
+    description: Stops reset of time_since_rest.
     default: false
   phantomspawncontrol.stopspawn:
     description: Disables phantom-spawning for the specific player.
