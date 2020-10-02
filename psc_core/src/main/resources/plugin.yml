@@ -28,6 +28,10 @@ permissions:
     description: Disables phantom-spawning for the specific player.
     default: false
 
+  phantomspawncontrol.defaultplayerdata:
+    description: Prevents loading of playerdata on login.
+    default: false
+
   phantomspawncontrol.cmd.*:
     description: Grants access to all commands.
     default: false
@@ -44,7 +48,6 @@ permissions:
   phantomspawncontrol.cmd.toggle:
     description: Grants access to the toggle command.
     default: op
-
 
 
   phantomspawncontrol.cmd.giantPhantoms.*:
@@ -98,7 +101,6 @@ permissions:
   phantomspawncontrol.cmd.giantphantoms.set.loottable:
     description: Grants access to all giantPhantoms set lootTable commands.
     default: op
-
 
 
   phantomspawncontrol.cmd.loottables.*:

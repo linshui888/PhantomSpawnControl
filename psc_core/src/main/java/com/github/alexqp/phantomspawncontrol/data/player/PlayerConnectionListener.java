@@ -17,7 +17,7 @@ public class PlayerConnectionListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        playerStatsContainer.load(ConsoleErrorType.NONE, e.getPlayer().getUniqueId());
+        playerStatsContainer.load(ConsoleErrorType.NONE, e.getPlayer());
     }
 
     @EventHandler

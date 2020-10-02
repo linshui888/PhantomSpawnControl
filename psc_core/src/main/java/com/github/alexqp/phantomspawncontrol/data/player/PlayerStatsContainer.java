@@ -46,7 +46,7 @@ public class PlayerStatsContainer implements Listener, PlayerSpawnRegulator, Sav
     public void load(ConsoleErrorType errorType) {
         ConsoleMessage.debug(this.getClass(), plugin, "Loading PlayerStats...");
         for (Player p : Bukkit.getOnlinePlayers()) {
-            this.load(errorType, p.getUniqueId());
+            this.load(errorType, p);
         }
         ConsoleMessage.debug(this.getClass(), plugin, "Completed loading of PlayerStats.");
     }
@@ -60,6 +60,15 @@ public class PlayerStatsContainer implements Listener, PlayerSpawnRegulator, Sav
         allStats.put(uuid, new PlayerStats(configChecker.checkBoolean(ymlFile, PlayerStats.configNames[0], errorType, true)));
 
         ConsoleMessage.debug(this.getClass(), plugin, "Loaded data for UUID " + uuid.toString());
+    }
+
+    public void load(@NotNull ConsoleErrorType errorType, @NotNull Player p) {
+        if (!p.hasPermission("phantomspawncontrol.defaultplayerdata")) {
+            this.load(errorType, p.getUniqueId());
+            return;
+        }
+        allStats.put(p.getUniqueId(), new PlayerStats(true));
+        ConsoleMessage.debug(this.getClass(), plugin, "Default data was loaded for player " + ConsoleMessage.getPlayerString(p));
     }
 
     @Override
