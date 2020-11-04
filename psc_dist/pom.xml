@@ -83,5 +83,10 @@
             <artifactId>phantomspawncontrol-craftbukkit_1_16_R2</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>me.alexqp</groupId>
+            <artifactId>phantomspawncontrol-craftbukkit_1_16_R3</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 </project>

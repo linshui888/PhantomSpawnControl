@@ -1,23 +1,23 @@
 package com.github.alexqp.phantomspawncontrol.main;
 
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStat;
+import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStats;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Phantom;
-import org.bukkit.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
-import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStats;
 
 import java.util.Objects;
 
 public class InternalsProvider {
 
-
-    protected String version = "core";
-
     @SuppressWarnings("WeakerAccess")
     public InternalsProvider() {
+    }
+
+    protected String getVersion() {
+        return this.getClass().getSimpleName();
     }
 
     public void applyPhantomStats(@NotNull PhantomStats phantomStats, @NotNull Phantom phantom) throws InternalsError {
@@ -44,7 +44,7 @@ public class InternalsProvider {
 
         }
         catch (NullPointerException e) {
-            throw new InternalsError(e.getMessage(), this.version);
+            throw new InternalsError(e.getMessage(), this.getVersion());
         }
     }
 
