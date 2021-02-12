@@ -111,7 +111,7 @@ public class SpawnRunnableAsync extends BukkitRunnable {
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
-    private UUID playerUUID;
+    private final UUID playerUUID;
 
     private SpawnRunnableAsync(UUID playerUUID) {
         this.playerUUID = playerUUID;
@@ -177,8 +177,8 @@ public class SpawnRunnableAsync extends BukkitRunnable {
                         phantoms.put(loc, spawnAlgorithm.getPhantomStatsConsumerAsync(score));
                     }
                     this.spawnPhantomsAndRestartAsync(phantoms);
+                    return;
                 }
-                return;
             } else {
                 ConsoleMessage.debug(this.getClass(), plugin, "world of player " + ConsoleMessage.getPlayerString(p) + " is not enabled.");
             }
@@ -187,6 +187,5 @@ public class SpawnRunnableAsync extends BukkitRunnable {
         catch (InterruptedException | ExecutionException e) {
             SpawnCancelMsg.printFutureGetError(plugin, this, e);
         }
-
     }
 }
