@@ -43,8 +43,6 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
      *     - ESSENTIALS: /rest command support?
      */
 
-    // TODO add World listener to avoid plugin dependencies of Multiworld etc.
-
     private static final String[] scoreboardNames = {"PLUGIN_PSC", "minecraft.custom:minecraft.time_since_rest"};
 
     private static InternalsProvider internals;
@@ -68,7 +66,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
     private boolean debug = false;
     private PhantomStatsContainer phantomStatsContainer;
 
-    private Set<Saveable> saveOnDisable = new HashSet<>();
+    private final Set<Saveable> saveOnDisable = new HashSet<>();
 
     @Override
     public void onEnable() {
