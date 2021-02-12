@@ -169,6 +169,7 @@ public class SpawnRunnableAsync extends BukkitRunnable {
             Player p = scheduler.callSyncMethod(plugin, () -> Bukkit.getPlayer(playerUUID)).get();
             if (p == null) {
                 this.sendStopDebug();
+                return;
             } else if (worldChecker.isWorldEnabled(p.getWorld())) {
                 if (spawnAlgorithm.shouldSpawnAsync(p, plugin)) {
                     int score = scheduler.callSyncMethod(plugin, () -> obj.getScore(p.getName()).getScore()).get();
