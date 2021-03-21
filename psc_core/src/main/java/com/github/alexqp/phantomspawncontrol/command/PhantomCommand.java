@@ -13,6 +13,7 @@ import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsContainer;
 import com.github.alexqp.phantomspawncontrol.data.player.PlayerStatsContainer;
 import com.github.alexqp.phantomspawncontrol.main.PhantomSpawnControl;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PhantomCommand extends AlexCommand {
 
@@ -30,6 +32,10 @@ public class PhantomCommand extends AlexCommand {
         ConfigChecker configChecker = new ConfigChecker(plugin);
         ConfigurationSection msgSection = configChecker.checkConfigSection(plugin.getConfig(), "messages.cmd", ConsoleErrorType.ERROR);
         if (msgSection != null) {
+            String prefix = configChecker.checkString(msgSection, "prefix", ConsoleErrorType.WARN, "");
+            assert prefix != null;
+            if (!prefix.isEmpty())
+                this.setPrefix(MessageTranslator.translateBukkitColorCodes(prefix));
             String noPermLine = configChecker.checkString(msgSection, "noPerm", ConsoleErrorType.WARN, "&4You do not have permission.");
             assert noPermLine != null;
             this.setNoPermissionLine(MessageTranslator.translateBukkitColorCodes(noPermLine));
@@ -42,9 +48,12 @@ public class PhantomCommand extends AlexCommand {
             assert usagePrefix != null;
             this.setUsagePrefix(MessageTranslator.translateBukkitColorCodes(usagePrefix));
 
+            BaseComponent[] noPlayerMsg = MessageTranslator.translateBukkitColorCodes(Objects.requireNonNull(configChecker.checkString(msgSection, "noPlayerMsg", ConsoleErrorType.WARN, "There is no such player.")));
+
             List<AlexSubCommand> subCmds = new ArrayList<>();
             subCmds.add(new ReloadSubCmd(this, plugin));
-            subCmds.add(this.buildToggleCmd(configChecker, msgSection, playerStatsContainer));
+            subCmds.add(this.buildToggleCmd(configChecker, msgSection, playerStatsContainer, noPlayerMsg));
+            subCmds.add(this.buildPlayerStatsCmd(configChecker, msgSection, playerStatsContainer, noPlayerMsg));
             if (phantomStatsContainer != null) {
                 subCmds.add(new GiantPhantomsSubCmd(this, plugin, phantomStatsContainer));
                 subCmds.add(new LootTablesSubCmd(this, plugin, phantomStatsContainer));
@@ -61,18 +70,28 @@ public class PhantomCommand extends AlexCommand {
         }
     }
 
-    private ToggleSubCmd buildToggleCmd(@NotNull ConfigChecker configChecker, @NotNull final ConfigurationSection msgSection, @NotNull PlayerStatsContainer playerStatsContainer) {
+    private ToggleSubCmd buildToggleCmd(@NotNull ConfigChecker configChecker, @NotNull final ConfigurationSection msgSection,
+                                        @NotNull PlayerStatsContainer playerStatsContainer, @NotNull BaseComponent[] noPlayerMsg) {
         ConfigurationSection section = configChecker.checkConfigSection(msgSection, "toggle", ConsoleErrorType.ERROR);
         String help = "toggles phantom spawning";
-        String enable = "&2Phantom spawning was activated for you.";
-        String disable = "&4Phantom spawning was deactivated for you.";
+        String enable = "&2Phantom spawning was activated for %player%.";
+        String disable = "&4Phantom spawning was deactivated for %player%.";
         if (section != null) {
             help = configChecker.checkString(section, "help", ConsoleErrorType.WARN, help);
             enable = configChecker.checkString(section, "enable", ConsoleErrorType.WARN, enable);
             disable = configChecker.checkString(section, "disable", ConsoleErrorType.WARN, disable);
         }
-        assert enable != null;
-        assert disable != null;
-        return new ToggleSubCmd(new TextComponent(help), this, MessageTranslator.translateBukkitColorCodes(enable), MessageTranslator.translateBukkitColorCodes(disable), playerStatsContainer);
+        assert enable != null && disable != null;
+        return new ToggleSubCmd(new TextComponent(help), this, enable, disable, noPlayerMsg, playerStatsContainer);
+    }
+
+    private PlayerStatsCmd buildPlayerStatsCmd(@NotNull ConfigChecker configChecker, @NotNull final ConfigurationSection msgSection,
+                                               @NotNull PlayerStatsContainer playerStatsContainer, @NotNull BaseComponent[] noPlayerMsg) {
+        ConfigurationSection section = configChecker.checkConfigSection(msgSection, "playerstats", ConsoleErrorType.ERROR);
+        String help = "shows the playerstats of a specific player";
+        if (section != null) {
+            help = configChecker.checkString(section, "help", ConsoleErrorType.WARN, help);
+        }
+        return new PlayerStatsCmd(new TextComponent(help), this, noPlayerMsg, playerStatsContainer);
     }
 }

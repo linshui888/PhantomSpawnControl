@@ -110,15 +110,20 @@ save_playerdata: true
 # Set to true if no phantom should be able to target a player who deactivated phantom spawning by command.
 playerdata_prevent_targeting: false
 
-# Configure nearly all messages.
+# Configure nearly all messages. toggle.enable and toggle.disable support the placeholder %player% for the player name.
 messages:
   cmd:
+    # This is the prefix of all command message outputs. An empty string will result in the default prefix.
+    prefix: ""
     credits: "Use /psc help for all available commands."
     noPerm: "&4You do not have permission."
     wrongCmdUsagePrefix: "&CUsage:"
+    noPlayerMsg: "&CThere is no such player."
     toggle:
       help: "toggles phantom spawning"
-      enable: "&2Phantom spawning was activated for you."
-      disable: "&4Phantom spawning was deactivated for you."
+      enable: "&2Phantom spawning was activated for %player%."
+      disable: "&4Phantom spawning was deactivated for %player%."
+    playerstats:
+      help: "shows the playerstats of a specific player"
 
 # Additional credits: The idea for the giant_phantoms feature is inspired by Xisumavoid's vanilla tweak data pack.

@@ -1,28 +1,39 @@
 package com.github.alexqp.phantomspawncontrol.command;
 
 import com.github.alexqp.commons.command.better.AlexSubCommand;
+import com.github.alexqp.commons.messages.MessageTranslator;
 import com.github.alexqp.phantomspawncontrol.data.player.PlayerStatsContainer;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ToggleSubCmd extends AlexSubCommand {
 
-    private BaseComponent enable;
-    private BaseComponent disable;
+    private final String toggleOtherPermission;
 
-    private PlayerStatsContainer container;
+    private final String enable;
+    private final String disable;
+    private final BaseComponent noPlayerMsg;
 
-    ToggleSubCmd(@NotNull TextComponent helpLine, @NotNull AlexSubCommand parent, @NotNull BaseComponent[] enable, @NotNull BaseComponent[] disable, @NotNull PlayerStatsContainer container) {
+    private final PlayerStatsContainer container;
+
+    ToggleSubCmd(@NotNull TextComponent helpLine, @NotNull AlexSubCommand parent,
+                 @NotNull String enable, @NotNull String disable, @NotNull BaseComponent[] noPlayerMsg,
+                 @NotNull PlayerStatsContainer container) {
         super("toggle", helpLine, parent);
-        this.setIsConsoleCmd(false);
-        this.enable = this.getPrefixMessage(enable);
-        this.disable = this.getPrefixMessage(disable);
+        this.toggleOtherPermission = this.getPermission() + ".other";
+        this.enable = enable;
+        this.disable = disable;
+        this.noPlayerMsg = this.getPrefixMessage(noPlayerMsg);
         this.container = container;
+        this.setCmdParamLine(new TextComponent("[player]"));
         this.makeFinal();
     }
 
@@ -30,11 +41,42 @@ public class ToggleSubCmd extends AlexSubCommand {
     public boolean execute(@NotNull CommandSender sender, @NotNull String label,
                            @NotNull List<AlexSubCommand> previousCmds, @NotNull List<String> previousExtraArguments,
                            @NotNull String[] args, int startIndex) {
-        if (container.getPlayerStats(((Player) sender).getUniqueId()).toggleAllowPhantomSpawn())
-            sendMessage(sender, enable);
-        else
-            sendMessage(sender, disable);
-        return true;
+        assert this.getNoPermissionLine() != null;
+        Player p;
+        if (startIndex < args.length) {
+            p = Bukkit.getPlayerExact(args[startIndex]);
+            if (p == null) {
+                sendMessage(sender, noPlayerMsg);
+                return false;
+            }
+        } else {
+            if (sender instanceof Player) {
+                p = (Player) sender;
+            } else {
+                sendMessage(sender, this.getNoPermissionLine());
+                return true;
+            }
+        }
 
+        if (!sender.equals(p) && !sender.hasPermission(this.toggleOtherPermission)) {
+            sendMessage(sender, this.getNoPermissionLine());
+            return true;
+        }
+
+        if (container.getPlayerStats(p.getUniqueId()).toggleAllowPhantomSpawn())
+            sendMessage(sender, this.getPrefixMessage(new ComponentBuilder().append(MessageTranslator.translateBukkitColorCodes(enable.replace("%player%", p.getName()))).create()));
+        else
+            sendMessage(sender, this.getPrefixMessage(new ComponentBuilder().append(MessageTranslator.translateBukkitColorCodes(disable.replace("%player%", p.getName()))).create()));
+        return true;
+    }
+
+    @Override
+    protected @NotNull List<String> additionalTabCompleterOptions(@NotNull CommandSender sender, @NotNull String label, @NotNull List<AlexSubCommand> previousCmds, @NotNull List<String> previousExtraArguments, @NotNull String[] args, int startIndex) {
+        ArrayList<String> completions = new ArrayList<>();
+        if (sender.hasPermission(this.toggleOtherPermission)) {
+            for (Player p : Bukkit.getOnlinePlayers())
+                completions.add(p.getName());
+        }
+        return completions;
     }
 }

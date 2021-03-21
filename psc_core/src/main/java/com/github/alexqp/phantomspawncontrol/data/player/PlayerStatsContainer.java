@@ -27,7 +27,7 @@ public class PlayerStatsContainer implements Listener, PlayerSpawnRegulator, Sav
     private JavaPlugin plugin;
     private DataHandler dataHandler;
 
-    private ConcurrentHashMap<UUID, PlayerStats> allStats = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, PlayerStats> allStats = new ConcurrentHashMap<>();
 
     public PlayerStatsContainer(JavaPlugin plugin, boolean preventTargeting) {
         try {

@@ -39,6 +39,8 @@ permissions:
     children:
       phantomspawncontrol.cmd.reload: true
       phantomspawncontrol.cmd.toggle: true
+      phantomspawncontrol.cmd.toggle.other: true
+      phantomspawncontrol.cmd.playerstats: true
       phantomspawncontrol.cmd.giantphantoms.*: true
       phantomspawncontrol.cmd.loottables.*: true
 
@@ -48,6 +50,13 @@ permissions:
 
   phantomspawncontrol.cmd.toggle:
     description: Grants access to the toggle command.
+    default: op
+  phantomspawncontrol.cmd.toggle.other:
+    description: Allows toggling for other players.
+    default: op
+
+  phantomspawncontrol.cmd.playerstats:
+    description: Grants access to the playerstats command.
     default: op
 
 

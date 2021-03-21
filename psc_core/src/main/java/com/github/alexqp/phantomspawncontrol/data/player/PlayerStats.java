@@ -19,7 +19,7 @@ public class PlayerStats implements SpawnConditionsHandler {
         this.allowPhantomSpawn = allowPhantomSpawn;
     }
 
-    boolean getAllowPhantomSpawn() {
+    public boolean getAllowPhantomSpawn() {
         return this.allowPhantomSpawn;
     }
 
@@ -30,12 +30,15 @@ public class PlayerStats implements SpawnConditionsHandler {
 
     @Override
     public boolean shouldSpawn(Player p, JavaPlugin plugin) {
-
         if (!allowPhantomSpawn) {
             ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(p, configNames[0]));
             return false;
         }
-
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "allow_spawn = " + this.getAllowPhantomSpawn();
     }
 }
