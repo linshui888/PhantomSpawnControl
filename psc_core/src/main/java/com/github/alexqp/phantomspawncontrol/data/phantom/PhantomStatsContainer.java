@@ -126,6 +126,10 @@ public class PhantomStatsContainer extends Observable implements Saveable {
             }
         }
 
+        if (chances.isEmpty()) {
+            ConsoleMessage.debug(this.getClass(), plugin, "No potential PhantomStats for " + subtractedScore + ", using defaultPhantom");
+            return new PhantomStats();
+        }
         int randomInt = random.nextInt(chances.lastKey() + 1);
         int ceilingKey = chances.ceilingKey(randomInt);
 
