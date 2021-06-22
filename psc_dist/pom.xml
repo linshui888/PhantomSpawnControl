@@ -20,7 +20,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.2.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -86,6 +86,11 @@
         <dependency>
             <groupId>me.alexqp</groupId>
             <artifactId>phantomspawncontrol-craftbukkit_1_16_R3</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>me.alexqp</groupId>
+            <artifactId>phantomspawncontrol-craftbukkit_1_17_R1</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

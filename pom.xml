@@ -27,6 +27,7 @@
         <module>psc_craftbukkit_1_16_R1</module>
         <module>psc_craftbukkit_1_16_R2</module>
         <module>psc_craftbukkit_1_16_R3</module>
+        <module>psc_craftbukkit_1_17_R1</module>
     </modules>
 
     <repositories>
