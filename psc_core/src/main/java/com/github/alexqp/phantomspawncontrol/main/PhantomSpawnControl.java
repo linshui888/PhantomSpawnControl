@@ -1,16 +1,16 @@
 package com.github.alexqp.phantomspawncontrol.main;
 
-import com.github.alexqp.phantomspawncontrol.command.PhantomCommand;
-import com.github.alexqp.phantomspawncontrol.data.phantom.loottables.AbstractPhantomLootTable;
-import com.github.alexqp.phantomspawncontrol.data.player.PlayerConnectionListener;
+import com.github.alexqp.commons.bstats.bukkit.Metrics;
 import com.github.alexqp.commons.config.ConfigChecker;
 import com.github.alexqp.commons.config.ConsoleErrorType;
 import com.github.alexqp.commons.messages.ConsoleMessage;
 import com.github.alexqp.commons.messages.Debugable;
-import com.github.alexqp.commons.bstats.Metrics;
+import com.github.alexqp.phantomspawncontrol.command.PhantomCommand;
 import com.github.alexqp.phantomspawncontrol.data.Saveable;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStats;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsContainer;
+import com.github.alexqp.phantomspawncontrol.data.phantom.loottables.AbstractPhantomLootTable;
+import com.github.alexqp.phantomspawncontrol.data.player.PlayerConnectionListener;
 import com.github.alexqp.phantomspawncontrol.data.player.PlayerStatsContainer;
 import com.github.alexqp.phantomspawncontrol.spawning.DisableNaturalPhantomSpawning;
 import com.github.alexqp.phantomspawncontrol.spawning.SpawnRunnableAsync;
@@ -26,6 +26,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -51,8 +52,8 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
         try {
             String packageName = PhantomSpawnControl.class.getPackage().getName();
             internalsName = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-            internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException exception) {
+            internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException | NoSuchMethodException | InvocationTargetException exception) {
             Bukkit.getLogger().log(Level.SEVERE, PhantomSpawnControl.class.getSimpleName() + " could not find a valid implementation for this server version. (internalsName = " + internalsName);
             internals = new InternalsProvider();
         }
@@ -70,17 +71,17 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
 
     @Override
     public void onEnable() {
-        Metrics bstats = new Metrics(this);
+        Metrics bstats = new Metrics(this, 3018);
         this.getLogger().info("This plugin was made by alex_qp.");
 
         this.onRealEnable();
 
-        bstats.addCustomChart(new Metrics.SimplePie("giant_phantoms", () -> {
+        /*bstats.addCustomChart(new org.bstats.bukkit.Metrics.SimplePie("giant_phantoms", () -> {
             if (phantomStatsContainer == null)
                 return "0";
             else
                 return String.valueOf(phantomStatsContainer.getDefinedScores().size());
-        }));
+        }));*/
     }
 
     @Override

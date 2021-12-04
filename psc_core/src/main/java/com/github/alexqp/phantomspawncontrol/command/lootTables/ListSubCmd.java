@@ -1,6 +1,6 @@
 package com.github.alexqp.phantomspawncontrol.command.lootTables;
 
-import com.github.alexqp.commons.command.better.AlexSubCommand;
+import com.github.alexqp.commons.command.AlexSubCommand;
 import com.github.alexqp.phantomspawncontrol.command.AsyncContainerSubCmd;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;

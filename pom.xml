@@ -6,15 +6,15 @@
 
     <groupId>me.alexqp</groupId>
     <artifactId>phantomspawncontrol-parent</artifactId>
-    <version>4.6.2</version>
+    <version>4.7.0</version>
     <name>PhantomSpawnControl</name>
     <url>https://www.spigotmc.org/members/alex_qp.306806/</url>
     <description>This plugin provides the ability to control phantom spawning.</description>
     <packaging>pom</packaging>
     <properties>
         <buildNo/>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <modules>
@@ -28,6 +28,7 @@
         <module>psc_craftbukkit_1_16_R2</module>
         <module>psc_craftbukkit_1_16_R3</module>
         <module>psc_craftbukkit_1_17_R1</module>
+        <module>psc_craftbukkit_1_18_R1</module>
     </modules>
 
     <repositories>

@@ -1,6 +1,6 @@
 package com.github.alexqp.phantomspawncontrol.command.giantPhantoms.SetSubCmd;
 
-import com.github.alexqp.commons.command.better.AlexSubCommand;
+import com.github.alexqp.commons.command.AlexSubCommand;
 import com.github.alexqp.commons.messages.ConsoleMessage;
 import com.github.alexqp.phantomspawncontrol.command.AsyncContainerSubCmd;
 import com.github.alexqp.phantomspawncontrol.command.giantPhantoms.GiantPhantomsSubCmd;

@@ -1,6 +1,6 @@
 package com.github.alexqp.phantomspawncontrol.command;
 
-import com.github.alexqp.commons.command.better.AlexSubCommand;
+import com.github.alexqp.commons.command.AlexSubCommand;
 import com.github.alexqp.phantomspawncontrol.main.PhantomSpawnControl;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
