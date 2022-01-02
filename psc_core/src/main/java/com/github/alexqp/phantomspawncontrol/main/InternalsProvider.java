@@ -2,6 +2,7 @@ package com.github.alexqp.phantomspawncontrol.main;
 
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStat;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStats;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
@@ -17,7 +18,7 @@ public class InternalsProvider {
     }
 
     protected String getVersion() {
-        return this.getClass().getSimpleName();
+        return Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
     }
 
     public void applyPhantomStats(@NotNull PhantomStats phantomStats, @NotNull Phantom phantom) throws InternalsError {

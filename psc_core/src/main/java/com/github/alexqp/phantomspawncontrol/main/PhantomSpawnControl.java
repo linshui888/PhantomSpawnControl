@@ -44,17 +44,20 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
      *     - ESSENTIALS: /rest command support?
      */
 
+    private static final Set<String> defaultInternalsVersions = Set.of("v1_13_R1", "v1_13_R2","v1_14_R1", "v1_15_R1", "v1_15_R2", "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1");
     private static final String[] scoreboardNames = {"PLUGIN_PSC", "minecraft.custom:minecraft.time_since_rest"};
 
     private static InternalsProvider internals;
     static {
-        String internalsName = "PLACEHOLDER";
         try {
             String packageName = PhantomSpawnControl.class.getPackage().getName();
-            internalsName = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-            internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).getDeclaredConstructor().newInstance();
+            String internalsName = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+            if (defaultInternalsVersions.contains(internalsName))
+                internals = new InternalsProvider();
+            else
+                internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException | NoSuchMethodException | InvocationTargetException exception) {
-            Bukkit.getLogger().log(Level.SEVERE, PhantomSpawnControl.class.getSimpleName() + " could not find a valid implementation for this server version. (internalsName = " + internalsName);
+            Bukkit.getLogger().log(Level.SEVERE, PhantomSpawnControl.class.getSimpleName() + " could not find a valid implementation for this server version.");
             internals = new InternalsProvider();
         }
     }
@@ -71,17 +74,17 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
 
     @Override
     public void onEnable() {
-        Metrics bstats = new Metrics(this, 3018);
+        Metrics bstats = new Metrics(this); // id 3018
         this.getLogger().info("This plugin was made by alex_qp.");
 
         this.onRealEnable();
 
-        /*bstats.addCustomChart(new org.bstats.bukkit.Metrics.SimplePie("giant_phantoms", () -> {
+        bstats.addCustomChart(new Metrics.SimplePie("giant_phantoms", () -> {
             if (phantomStatsContainer == null)
                 return "0";
             else
                 return String.valueOf(phantomStatsContainer.getDefinedScores().size());
-        }));*/
+        }));
     }
 
     @Override
