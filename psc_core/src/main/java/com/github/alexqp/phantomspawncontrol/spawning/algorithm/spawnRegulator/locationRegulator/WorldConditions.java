@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
 import java.util.concurrent.ExecutionException;
 
 public class WorldConditions implements LocationSpawnRegulator {
@@ -26,17 +27,33 @@ public class WorldConditions implements LocationSpawnRegulator {
         if (worldSection != null) {
             boolean checkAir = configChecker.checkBoolean(worldSection, "must_be_night", ConsoleErrorType.WARN, true);
             double spawnProtectionRadius = configChecker.checkDouble(worldSection, "spawn_protection_radius", ConsoleErrorType.WARN, 0, Range.atLeast(0.0));
-            return new WorldConditions(checkAir, Math.pow(spawnProtectionRadius, 2));
+
+            HashSet<Integer> disabledMoonPhases = new HashSet<>();
+            String moonPhasePath = "disabled_moon_phases";
+            if (worldSection.contains(moonPhasePath)) {
+                for (String phase : worldSection.getStringList(moonPhasePath)) {
+                    try {
+                        disabledMoonPhases.add(Integer.parseInt(phase));
+                    }
+                    catch (NumberFormatException e) {
+                        configChecker.attemptConsoleMsg(ConsoleErrorType.WARN, worldSection, moonPhasePath, phase + " is no valid integer and was therefore skipped.");
+                    }
+                }
+            }
+
+            return new WorldConditions(checkAir, Math.pow(spawnProtectionRadius, 2), disabledMoonPhases);
         }
         return null;
     }
 
-    boolean mustBeNight;
-    double spawnProtectionRadiusSquared;
+    private final boolean mustBeNight;
+    private final double spawnProtectionRadiusSquared;
+    private final HashSet<Integer> disabledMoonPhases;
 
-    private WorldConditions(boolean mustBeNight, double spawnProtectionRadiusSquared) {
+    private WorldConditions(boolean mustBeNight, double spawnProtectionRadiusSquared, HashSet<Integer> disabledMoonPhases) {
         this.mustBeNight = mustBeNight;
         this.spawnProtectionRadiusSquared = spawnProtectionRadiusSquared;
+        this.disabledMoonPhases = disabledMoonPhases;
     }
 
     @Override
@@ -68,7 +85,22 @@ public class WorldConditions implements LocationSpawnRegulator {
                 }).get();
             }
 
-            return mustBeNightResult && spawnProtectionRadiusResult;
+            boolean moonPhaseResult = true;
+            if (!disabledMoonPhases.isEmpty()) {
+                moonPhaseResult = scheduler.callSyncMethod(plugin, () -> {
+                    World world = loc.getWorld();
+                    if (world != null) {
+                        Integer phase = (int) ((world.getFullTime() / 24000) % 8 + 1);
+                        if (disabledMoonPhases.contains(phase)) {
+                            ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(loc, "MoonPhase"));
+                            return false;
+                        }
+                    }
+                    return true;
+                }).get();
+            }
+
+            return mustBeNightResult && spawnProtectionRadiusResult && moonPhaseResult;
         } catch (InterruptedException | ExecutionException e) {
             SpawnCancelMsg.printFutureGetError(plugin, this, null, e);
         }

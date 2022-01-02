@@ -40,6 +40,10 @@ phantom_spawn:
     world:
       # Does it has to be night-time in order to spawn phantoms? This will only affect normal worlds (because there is no "day" in nether, the_end)
       must_be_night: true
+      # No phantom will spawn during disabled moon phases. Please add the corresponding integer of the moon phase (i.e. 1 to disable full moon). For a list of all moon phases visit the minecraft wiki: https://minecraft.fandom.com/wiki/Moon
+      disabled_moon_phases:
+      #  - 1
+      #  - ...
       # No phantom within the protection radius of spawn will be able to spawn.
       spawn_protection_radius: 0
 
