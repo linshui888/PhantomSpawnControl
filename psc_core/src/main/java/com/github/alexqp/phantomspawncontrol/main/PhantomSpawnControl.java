@@ -16,6 +16,8 @@ import com.github.alexqp.phantomspawncontrol.spawning.DisableNaturalPhantomSpawn
 import com.github.alexqp.phantomspawncontrol.spawning.SpawnRunnableAsync;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.SpawnAlgorithmAsync;
 import com.github.alexqp.phantomspawncontrol.utility.WorldChecker;
+import com.jeff_media.updatechecker.UpdateCheckSource;
+import com.jeff_media.updatechecker.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -43,6 +45,8 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
      *     - soft-depend TimeControl to determine day-worlds/time
      *     - ESSENTIALS: /rest command support?
      */
+
+    private static final int SPIGOT_RESOURCE_ID = 71538;
 
     private static final Set<String> defaultInternalsVersions = Set.of("v1_13_R1", "v1_13_R2","v1_14_R1", "v1_15_R1", "v1_15_R2", "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2");
     private static final String[] scoreboardNames = {"PLUGIN_PSC", "minecraft.custom:minecraft.time_since_rest"};
@@ -85,6 +89,8 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
             else
                 return String.valueOf(phantomStatsContainer.getDefinedScores().size());
         }));
+
+        this.updateChecker();
     }
 
     @Override
@@ -204,5 +210,21 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
     @Override
     public boolean getDebug() {
         return debug;
+    }
+
+    private void updateChecker() {
+        ConfigChecker configChecker = new ConfigChecker(this);
+        ConfigurationSection updateCheckerSection = configChecker.checkConfigSection(this.getConfig(), "updatechecker", ConsoleErrorType.ERROR);
+        if (updateCheckerSection != null && configChecker.checkBoolean(updateCheckerSection, "enable", ConsoleErrorType.WARN, true)) {
+            ConsoleMessage.debug((Debugable) this, "enabled UpdateChecker");
+
+            new UpdateChecker(this, UpdateCheckSource.SPIGOT, String.valueOf(SPIGOT_RESOURCE_ID))
+                    .setDownloadLink(SPIGOT_RESOURCE_ID)
+                    .setChangelogLink("https://www.spigotmc.org/resources/" + SPIGOT_RESOURCE_ID + "/updates")
+                    .setDonationLink("https://paypal.me/alexqpplugins")
+                    .setNotifyOpsOnJoin(configChecker.checkBoolean(updateCheckerSection, "notify_op_on_login", ConsoleErrorType.WARN, true))
+                    .setNotifyByPermissionOnJoin("phantomspawncontrol.updatechecker")
+                    .checkEveryXHours(24).checkNow();
+        }
     }
 }

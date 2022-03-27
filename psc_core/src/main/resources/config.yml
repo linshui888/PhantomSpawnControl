@@ -130,4 +130,8 @@ messages:
     playerstats:
       help: "shows the playerstats of a specific player"
 
+updatechecker:
+  enable: true
+  notify_op_on_login: true
+
 # Additional credits: The idea for the giant_phantoms feature is inspired by Xisumavoid's vanilla tweak data pack.

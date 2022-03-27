@@ -6,7 +6,7 @@
     <parent>
         <artifactId>phantomspawncontrol-parent</artifactId>
         <groupId>me.alexqp</groupId>
-        <version>4.8.1</version>
+        <version>4.9.0</version>
     </parent>
 
     <artifactId>phantomspawncontrol-dist</artifactId>
@@ -32,12 +32,17 @@
                                 <includes>
                                     <include>me.alexqp:phantomspawncontrol-*</include>
                                     <include>com.github.Alex39099.Commons:commons-dist</include>
+                                    <include>com.jeff_media:SpigotUpdateChecker</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern>com.github.alexqp.commons</pattern>
                                     <shadedPattern>com.github.alexqp.${project.parent.name}.commons</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.jeff_media.updatechecker</pattern>
+                                    <shadedPattern>com.github.alexqp.${project.parent.name}.updatechecker</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

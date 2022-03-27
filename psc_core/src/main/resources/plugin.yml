@@ -147,3 +147,7 @@ permissions:
   phantomspawncontrol.cmd.loottables.edit:
     description: Grants access to all lootTables edit commands.
     default: op
+
+  phantomspawncontrol.updatechecker:
+    description: Get notified on login if a new update of the plugin exists.
+    default: false

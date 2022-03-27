@@ -6,7 +6,7 @@
     <parent>
         <artifactId>phantomspawncontrol-parent</artifactId>
         <groupId>me.alexqp</groupId>
-        <version>4.8.1</version>
+        <version>4.9.0</version>
     </parent>
 
     <artifactId>phantomspawncontrol-core</artifactId>
@@ -51,6 +51,12 @@
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.0.2</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>SpigotUpdateChecker</artifactId>
+            <version>2.3.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
