@@ -1,6 +1,7 @@
 package com.github.alexqp.phantomspawncontrol.main;
 
 import com.github.alexqp.commons.bstats.bukkit.Metrics;
+import com.github.alexqp.commons.bstats.charts.SimplePie;
 import com.github.alexqp.commons.config.ConfigChecker;
 import com.github.alexqp.commons.config.ConsoleErrorType;
 import com.github.alexqp.commons.messages.ConsoleMessage;
@@ -78,12 +79,12 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
 
     @Override
     public void onEnable() {
-        Metrics bstats = new Metrics(this); // id 3018
+        Metrics bstats = new Metrics(this, 3018);
         this.getLogger().info("This plugin was made by alex_qp.");
 
         this.onRealEnable();
 
-        bstats.addCustomChart(new Metrics.SimplePie("giant_phantoms", () -> {
+        bstats.addCustomChart(new SimplePie("giant_phantoms", () -> {
             if (phantomStatsContainer == null)
                 return "0";
             else
