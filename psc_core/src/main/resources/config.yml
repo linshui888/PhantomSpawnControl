@@ -130,6 +130,7 @@ messages:
     playerstats:
       help: "shows the playerstats of a specific player"
 
+# Options regarding the updateChecker (by mfnalex (https://github.com/JEFF-Media-GbR/Spigot-UpdateChecker))
 updatechecker:
   enable: true
   notify_op_on_login: true
