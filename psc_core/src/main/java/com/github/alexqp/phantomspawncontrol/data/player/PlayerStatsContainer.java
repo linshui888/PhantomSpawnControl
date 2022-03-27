@@ -6,15 +6,12 @@ import com.github.alexqp.commons.dataHandler.DataHandler;
 import com.github.alexqp.commons.dataHandler.LoadSaveException;
 import com.github.alexqp.commons.messages.ConsoleMessage;
 import com.github.alexqp.phantomspawncontrol.data.Saveable;
+import com.github.alexqp.phantomspawncontrol.listener.PhantomTargetPlayerListener;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.PlayerSpawnRegulator;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +35,7 @@ public class PlayerStatsContainer implements Listener, PlayerSpawnRegulator, Sav
         }
 
         if (preventTargeting) {
-            Bukkit.getPluginManager().registerEvents(this, plugin);
+            Bukkit.getPluginManager().registerEvents(new PhantomTargetPlayerListener(plugin, this), plugin);
             ConsoleMessage.debug(this.getClass(), plugin, "Target-Prevention was activated.");
         }
     }
@@ -110,15 +107,5 @@ public class PlayerStatsContainer implements Listener, PlayerSpawnRegulator, Sav
     public boolean shouldSpawnAsync(@NotNull Player p, @NotNull JavaPlugin plugin) {
         PlayerStats stats = allStats.getOrDefault(p.getUniqueId(), new PlayerStats());
         return stats.shouldSpawn(p, plugin);
-    }
-
-    @EventHandler // events only get registered if targeting should be prevented
-    public void onTargetPrevent(EntityTargetLivingEntityEvent e) {
-        if (e.getTarget() instanceof Player && e.getEntityType().equals(EntityType.PHANTOM)) {
-            if (!this.getPlayerStats(e.getTarget().getUniqueId()).getAllowPhantomSpawn()) {
-                ((Phantom) e.getEntity()).setTarget(null);
-                ConsoleMessage.debug(this.getClass(), plugin, "Prevented targeting of player " + e.getTarget().getName());
-            }
-        }
     }
 }
