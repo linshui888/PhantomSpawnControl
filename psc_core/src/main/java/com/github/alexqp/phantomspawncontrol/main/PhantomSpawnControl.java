@@ -161,7 +161,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
                 playerStatsContainer.load(ConsoleErrorType.NONE);
                 saveOnDisable.add(playerStatsContainer);
                 Bukkit.getPluginManager().registerEvents(new PlayerConnectionListener(playerStatsContainer), this);
-                ConsoleMessage.debug((Debugable) this, "Data will be saved and loaded for PlayerStatsContainer");
+                ConsoleMessage.debug((Debugable) this, "Data will be saved and loaded for " + playerStatsContainer.getClass().getSimpleName());
             }
 
             if (enableSpawning) {
