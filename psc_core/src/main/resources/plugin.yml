@@ -21,6 +21,7 @@ permissions:
       phantomspawncontrol.stopspawn: true
       phantomspawncontrol.defaultplayerdata: true
       phantomspawncontrol.cmd.*: true
+      phantomspawncontrol.updatechecker: true
 
   phantomspawncontrol.stopreset:
     description: Stops reset of time_since_rest.
