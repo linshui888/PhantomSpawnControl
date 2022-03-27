@@ -22,7 +22,7 @@ public class PhantomTargetPlayerListener implements Listener {
         this.container = Objects.requireNonNull(container);
     }
 
-    @EventHandler (ignoreCancelled = true)// events only get registered if targeting should be prevented
+    @EventHandler (ignoreCancelled = true)
     public void onTargetPrevent(EntityTargetLivingEntityEvent e) {
         if (e.getTarget() instanceof Player && e.getEntityType().equals(EntityType.PHANTOM)) {
             if (!container.getPlayerStats(e.getTarget().getUniqueId()).getAllowPhantomSpawn()) {
