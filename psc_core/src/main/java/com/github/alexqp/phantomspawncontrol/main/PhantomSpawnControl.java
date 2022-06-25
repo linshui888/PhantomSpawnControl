@@ -47,9 +47,8 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
      *     - ESSENTIALS: /rest command support?
      */
 
-    private static final int SPIGOT_RESOURCE_ID = 71538;
-
-    private static final Set<String> defaultInternalsVersions = Set.of("v1_13_R1", "v1_13_R2","v1_14_R1", "v1_15_R1", "v1_15_R2", "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2");
+    private static final Set<String> defaultInternalsVersions = Set.of("v1_13_R1", "v1_13_R2","v1_14_R1", "v1_15_R1", "v1_15_R2",
+            "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1");
     private static final String[] scoreboardNames = {"PLUGIN_PSC", "minecraft.custom:minecraft.time_since_rest"};
 
     private static InternalsProvider internals;
@@ -214,14 +213,15 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
     }
 
     private void updateChecker() {
+        int spigotResourceID = 71538;
         ConfigChecker configChecker = new ConfigChecker(this);
         ConfigurationSection updateCheckerSection = configChecker.checkConfigSection(this.getConfig(), "updatechecker", ConsoleErrorType.ERROR);
         if (updateCheckerSection != null && configChecker.checkBoolean(updateCheckerSection, "enable", ConsoleErrorType.WARN, true)) {
             ConsoleMessage.debug((Debugable) this, "enabled UpdateChecker");
 
-            new UpdateChecker(this, UpdateCheckSource.SPIGOT, String.valueOf(SPIGOT_RESOURCE_ID))
-                    .setDownloadLink(SPIGOT_RESOURCE_ID)
-                    .setChangelogLink("https://www.spigotmc.org/resources/" + SPIGOT_RESOURCE_ID + "/updates")
+            new UpdateChecker(this, UpdateCheckSource.SPIGOT, String.valueOf(spigotResourceID))
+                    .setDownloadLink(spigotResourceID)
+                    .setChangelogLink("https://www.spigotmc.org/resources/" + spigotResourceID + "/updates")
                     .setDonationLink("https://paypal.me/alexqpplugins")
                     .setNotifyOpsOnJoin(configChecker.checkBoolean(updateCheckerSection, "notify_op_on_login", ConsoleErrorType.WARN, true))
                     .setNotifyByPermissionOnJoin("phantomspawncontrol.updatechecker")
