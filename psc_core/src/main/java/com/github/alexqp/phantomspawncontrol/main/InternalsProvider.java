@@ -4,9 +4,13 @@ import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStat;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStats;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Statistic;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Phantom;
+import org.bukkit.scoreboard.Criteria;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -54,5 +58,9 @@ public class InternalsProvider {
         double modifyValue = goalValue - baseValue;
         return new AttributeModifier("PSC_Plugin", modifyValue, AttributeModifier.Operation.ADD_NUMBER);
 
+    }
+
+    public Objective addPluginScoreboardObjective(Scoreboard scoreboard, String name) {
+        return scoreboard.registerNewObjective(name, Criteria.statistic(Statistic.TIME_SINCE_REST), name);
     }
 }
