@@ -30,7 +30,9 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -54,22 +56,33 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
     static {
         try {
             String packageName = PhantomSpawnControl.class.getPackage().getName();
-            String internalsName = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+            String internalsName = getInternalsName(Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]);
             if (defaultInternalsVersion.equals(internalsName)) {
                 Bukkit.getLogger().log(Level.INFO, "PhantomSpawnControl is using the latest implementation (last tested for " + defaultInternalsVersion + ").");
                 internals = new InternalsProvider();
             } else {
-                // needed to add InternalsProvider#addPluginScoreboardObjective after v1_19_R1
-                Set<String> legacyVersionPack = Set.of("v1_13_R1", "v1_13_R2","v1_14_R1", "v1_15_R1", "v1_15_R2",
-                        "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1");
-                if (legacyVersionPack.contains(internalsName))
-                    internalsName = "v1_19_R1";
                 internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).getDeclaredConstructor().newInstance();
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException | NoSuchMethodException | InvocationTargetException exception) {
             Bukkit.getLogger().log(Level.SEVERE, PhantomSpawnControl.class.getSimpleName() + " could not find a valid implementation for this server version. Trying to use the default implementation...");
             internals = new InternalsProvider();
         }
+    }
+
+    /**
+     *
+     * @param internalsName the current NMS version used by the server
+     * @return the internals version name for the given NMS version. Returns defaultInternalsVersion for newer versions by default.
+     */
+    private static String getInternalsName(String internalsName) {
+        Map<String, String> internalsVersions = new HashMap<>();
+        // needed to add InternalsProvider#addPluginScoreboardObjective after v1_19_R1
+        Set<String> legacyVersionPack = Set.of("v1_13_R1", "v1_13_R2","v1_14_R1", "v1_15_R1", "v1_15_R2",
+                "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1");
+        for (String legacyVersion : legacyVersionPack) {
+            internalsVersions.put(legacyVersion, "v1_19_R1");
+        }
+        return internalsVersions.getOrDefault(internalsName, defaultInternalsVersion);
     }
 
     static {
