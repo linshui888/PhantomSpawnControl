@@ -47,7 +47,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
      *     - ESSENTIALS: /rest command support?
      */
 
-    private static final Set<String> defaultInternalsVersions = Set.of("v1_19_R2");
+    private static final String defaultInternalsVersion = "v1_19_R4";
     private static final String scoreboardObjectiveName = "PLUGIN_PSC";
 
     private static InternalsProvider internals;
@@ -55,9 +55,10 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
         try {
             String packageName = PhantomSpawnControl.class.getPackage().getName();
             String internalsName = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-            if (defaultInternalsVersions.contains(internalsName))
+            if (defaultInternalsVersion.equals(internalsName)) {
+                Bukkit.getLogger().log(Level.INFO, "PhantomSpawnControl is using the latest implementation (last tested for " + defaultInternalsVersion + ").");
                 internals = new InternalsProvider();
-            else {
+            } else {
                 // needed to add InternalsProvider#addPluginScoreboardObjective after v1_19_R1
                 Set<String> legacyVersionPack = Set.of("v1_13_R1", "v1_13_R2","v1_14_R1", "v1_15_R1", "v1_15_R2",
                         "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1");
