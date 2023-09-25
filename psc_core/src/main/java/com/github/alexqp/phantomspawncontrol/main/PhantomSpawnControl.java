@@ -49,7 +49,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
      *     - ESSENTIALS: /rest command support?
      */
 
-    private static final String defaultInternalsVersion = "v1_19_R3";
+    private static final String defaultInternalsVersion = "v1_20_R1";
     private static final String scoreboardObjectiveName = "PLUGIN_PSC";
 
     private static InternalsProvider internals;
@@ -61,10 +61,12 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
                 Bukkit.getLogger().log(Level.INFO, "PhantomSpawnControl is using the latest implementation (last tested for " + defaultInternalsVersion + ").");
                 internals = new InternalsProvider();
             } else {
+                Bukkit.getLogger().log(Level.INFO, "PhantomSpawnControl is using the implementation for version " + internalsName + ".");
                 internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).getDeclaredConstructor().newInstance();
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException | NoSuchMethodException | InvocationTargetException exception) {
-            Bukkit.getLogger().log(Level.SEVERE, PhantomSpawnControl.class.getSimpleName() + " could not find a valid implementation for this server version. Trying to use the default implementation...");
+            Bukkit.getLogger().log(Level.WARNING, PhantomSpawnControl.class.getSimpleName() + " could not find an updated implementation for this server version. " +
+                    "However the plugin is trying to use the latest implementation which should work if Minecraft did not change drastically (last tested version: " + defaultInternalsVersion + ").");
             internals = new InternalsProvider();
         }
     }
