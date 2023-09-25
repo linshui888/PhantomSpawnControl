@@ -58,10 +58,10 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
             String packageName = PhantomSpawnControl.class.getPackage().getName();
             String internalsName = getInternalsName(Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]);
             if (defaultInternalsVersion.equals(internalsName)) {
-                Bukkit.getLogger().log(Level.INFO, "PhantomSpawnControl is using the latest implementation (last tested for " + defaultInternalsVersion + ").");
+                Bukkit.getLogger().log(Level.INFO, PhantomSpawnControl.class.getSimpleName() + " is using the latest implementation (last tested for " + defaultInternalsVersion + ").");
                 internals = new InternalsProvider();
             } else {
-                Bukkit.getLogger().log(Level.INFO, "PhantomSpawnControl is using the implementation for version " + internalsName + ".");
+                Bukkit.getLogger().log(Level.INFO, PhantomSpawnControl.class.getSimpleName() + " is using the implementation for version " + internalsName + ".");
                 internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).getDeclaredConstructor().newInstance();
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException | NoSuchMethodException | InvocationTargetException exception) {
