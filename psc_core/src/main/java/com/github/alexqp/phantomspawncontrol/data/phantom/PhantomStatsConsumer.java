@@ -8,20 +8,21 @@ import org.bukkit.entity.Phantom;
 import org.bukkit.loot.LootTable;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Consumer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
 
 // thread safe due to no setters
 public class PhantomStatsConsumer implements Consumer<Phantom> {
 
-    private JavaPlugin plugin;
-    private InternalsProvider internalsProvider;
+    private final JavaPlugin plugin;
+    private final InternalsProvider internalsProvider;
 
-    private PhantomStats stats;
+    private final PhantomStats stats;
 
-    private String metadataKey;
-    private LootTable lootTable;
+    private final String metadataKey;
+    private final LootTable lootTable;
 
     PhantomStatsConsumer(@NotNull JavaPlugin plugin, @NotNull InternalsProvider internals,
                          @Nullable PhantomStats stats,
@@ -69,6 +70,7 @@ public class PhantomStatsConsumer implements Consumer<Phantom> {
                 ConsoleMessage.debug(this.getClass(), plugin, "Applied PhantomStats.");
                 if (lootTable != null) {
                     phantom.setLootTable(null); // wait for API change...
+                    assert metadataKey != null;
                     phantom.setMetadata(metadataKey, new FixedMetadataValue(plugin, lootTable));
                     ConsoleMessage.debug(this.getClass(), plugin, "Added LootTable to phantom.");
                 }

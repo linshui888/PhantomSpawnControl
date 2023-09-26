@@ -5,12 +5,12 @@ import com.github.alexqp.commons.config.ConsoleErrorType;
 import com.github.alexqp.commons.messages.ConsoleMessage;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsContainer;
 import com.github.alexqp.phantomspawncontrol.data.player.PlayerStatsContainer;
-import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.locationRegulator.WorldConditions;
-import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.playerRegulator.PlayerConditionsBuilder;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.PlayerSpawnRegulator;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.SpawnRegulatorHandler;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.locationRegulator.GeneralLocationConditions;
+import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.locationRegulator.WorldConditions;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.locationRegulator.WorldGuardConditions;
+import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.playerRegulator.PlayerConditionsBuilder;
 import com.github.alexqp.phantomspawncontrol.utility.SpawnCancelMsg;
 import com.google.common.collect.Range;
 import org.bukkit.Bukkit;
@@ -21,7 +21,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.Objective;
-import org.bukkit.util.Consumer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,6 +29,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Consumer;
 
 public class SpawnAlgorithmAsync extends SpawnRegulatorHandler {
 
@@ -69,13 +69,13 @@ public class SpawnAlgorithmAsync extends SpawnRegulatorHandler {
         return null;
     }
 
-    private Objective scoreObjective;
+    private final Objective scoreObjective;
 
-    private int maxGroupSize;
-    private double spawnChanceMultiplier;
-    private int[] spawnAttemptDelay;
+    private final int maxGroupSize;
+    private final double spawnChanceMultiplier;
+    private final int[] spawnAttemptDelay;
 
-    private PhantomStatsContainer phantomStatsContainer;
+    private final PhantomStatsContainer phantomStatsContainer;
     private int randomChanceScore = 72000;
 
     private SpawnAlgorithmAsync(@NotNull Objective scoreObjective, int maxGroupSize,
