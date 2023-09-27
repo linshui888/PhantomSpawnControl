@@ -132,7 +132,7 @@ public class SpawnAlgorithmAsync extends SpawnRegulatorHandler {
                 double chance = scheduler.callSyncMethod(plugin, () -> this.getRandomSpawnChance(scoreObjective.getScore(p.getName()).getScore())).get();
                 for (Location loc : new HashSet<>(spawnLocations)) {
                     double random = Math.random();
-                    if (random < chance) {
+                    if (chance < random) {
                         ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(p, "random chance (" + random + " < " + chance + ")"));
                         spawnLocations.remove(loc);
                     }
