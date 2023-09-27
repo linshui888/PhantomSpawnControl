@@ -133,7 +133,7 @@ public class SpawnAlgorithmAsync extends SpawnRegulatorHandler {
                 for (Location loc : new HashSet<>(spawnLocations)) {
                     double random = Math.random();
                     if (chance < random) {
-                        ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(p, "random chance (" + random + " < " + chance + ")"));
+                        ConsoleMessage.debug(this.getClass(), plugin, SpawnCancelMsg.build(p, "random chance (" + chance + " < " + random + ")"));
                         spawnLocations.remove(loc);
                     }
                 }
