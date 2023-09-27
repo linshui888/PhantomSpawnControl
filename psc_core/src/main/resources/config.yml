@@ -28,7 +28,8 @@ phantom_spawn:
     max_light_level: 7
     # Phantoms may spawn in packs. What should be the maximal amount of phantoms in one pack?
     max_group_size: 4
-    # This will multiply the spawn chance of the vanilla MC formula in order to in- or decrease spawning. The vanilla formula is: spawn-chance = (x - 3) / x where x is the amount of days since no rest.
+    # This will multiply the spawn chance of the vanilla MC formula in order to in- or decrease spawning.
+    # For more information, please see the wiki: https://github.com/Alex39099/PhantomSpawnControl/wiki/Basic-Configurations-%28config.yml%29
     spawn_chance_multiplier: 1.0
 
     # For each world a timer will check each player for phantom spawning. How long should it be delayed before the next attempt?
@@ -63,6 +64,7 @@ phantom_spawn:
       # Options regarding the score (time since rest).
       score:
         # Until what score should no phantom be able to spawn? Score increases every tick but resets by vanilla if the player enters a bed or dies.
+        # For more information, please see the wiki: https://github.com/Alex39099/PhantomSpawnControl/wiki/Basic-Configurations-%28config.yml%29
         min_score: 72000
         # If a player changes to an enabled gamemode his score will reset. This can be deactivated for specific players by permissions, please see the plugin's page for more information.
         reset_gamemodes:
