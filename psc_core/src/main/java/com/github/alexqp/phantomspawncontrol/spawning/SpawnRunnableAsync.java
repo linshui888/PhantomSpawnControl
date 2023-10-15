@@ -1,6 +1,7 @@
 package com.github.alexqp.phantomspawncontrol.spawning;
 
 import com.github.alexqp.commons.messages.ConsoleMessage;
+import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsConsumer;
 import com.github.alexqp.phantomspawncontrol.events.PhantomPackSpawnEvent;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.SpawnAlgorithmAsync;
 import com.github.alexqp.phantomspawncontrol.utility.SpawnCancelMsg;
@@ -19,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Consumer;
 
 
 public class SpawnRunnableAsync extends BukkitRunnable {
@@ -121,7 +121,7 @@ public class SpawnRunnableAsync extends BukkitRunnable {
         ConsoleMessage.debug(SpawnRunnableAsync.class, plugin, "Completely stopped runnable because player was null for " + playerUUID);
     }
 
-    private void spawnPhantomsAndRestartAsync(@NotNull Map<Location, Consumer<Phantom>> phantoms) {
+    private void spawnPhantomsAndRestartAsync(@NotNull Map<Location, PhantomStatsConsumer> phantoms) {
         new BukkitRunnable() {
 
             @Override
@@ -173,7 +173,7 @@ public class SpawnRunnableAsync extends BukkitRunnable {
             } else if (worldChecker.isWorldEnabled(p.getWorld())) {
                 if (spawnAlgorithm.shouldSpawnAsync(p, plugin)) {
                     int score = scheduler.callSyncMethod(plugin, () -> obj.getScore(p.getName()).getScore()).get();
-                    HashMap<Location, Consumer<Phantom>> phantoms = new HashMap<>();
+                    HashMap<Location, PhantomStatsConsumer> phantoms = new HashMap<>();
                     for (Location loc : spawnAlgorithm.getSpawnLocationsAsync(p, plugin)) {
                         phantoms.put(loc, spawnAlgorithm.getPhantomStatsConsumerAsync(score));
                     }

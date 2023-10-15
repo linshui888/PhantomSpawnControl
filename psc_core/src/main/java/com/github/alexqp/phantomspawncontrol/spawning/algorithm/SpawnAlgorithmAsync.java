@@ -3,6 +3,7 @@ package com.github.alexqp.phantomspawncontrol.spawning.algorithm;
 import com.github.alexqp.commons.config.ConfigChecker;
 import com.github.alexqp.commons.config.ConsoleErrorType;
 import com.github.alexqp.commons.messages.ConsoleMessage;
+import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsConsumer;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsContainer;
 import com.github.alexqp.phantomspawncontrol.data.player.PlayerStatsContainer;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.spawnRegulator.PlayerSpawnRegulator;
@@ -16,7 +17,6 @@ import com.google.common.collect.Range;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -29,7 +29,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Consumer;
 
 public class SpawnAlgorithmAsync extends SpawnRegulatorHandler {
 
@@ -91,10 +90,10 @@ public class SpawnAlgorithmAsync extends SpawnRegulatorHandler {
         this.phantomStatsContainer = phantomStatsContainer;
     }
 
-    public Consumer<Phantom> getPhantomStatsConsumerAsync(int score) {
+    public PhantomStatsConsumer getPhantomStatsConsumerAsync(int score) {
         if (phantomStatsContainer != null)
             return phantomStatsContainer.getPhantomStatsConsumerAsync(score - randomChanceScore, new Random());
-        return phantom -> {}; // lambda consumer
+        return new PhantomStatsConsumer(); // lambda consumer
     }
 
     private Set<Location> getBoxSpawnLocations(final Location pLoc) {

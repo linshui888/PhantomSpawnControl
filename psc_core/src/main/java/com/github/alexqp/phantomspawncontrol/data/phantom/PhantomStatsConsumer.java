@@ -8,7 +8,6 @@ import org.bukkit.entity.Phantom;
 import org.bukkit.loot.LootTable;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -24,10 +23,18 @@ public class PhantomStatsConsumer implements Consumer<Phantom> {
     private final String metadataKey;
     private final LootTable lootTable;
 
-    PhantomStatsConsumer(@NotNull JavaPlugin plugin, @NotNull InternalsProvider internals,
+    public PhantomStatsConsumer() {
+        this(null, null, null, null, null);
+    }
+
+    public PhantomStatsConsumer(@Nullable JavaPlugin plugin, @Nullable InternalsProvider internals,
                          @Nullable PhantomStats stats,
                          @Nullable String metadataKey, @Nullable LootTable lootTable)
                 throws IllegalArgumentException {
+        if (stats != null && (plugin == null || internals == null)) {
+            throw new IllegalArgumentException("plugin and internals must not be null while stats is not null");
+        }
+
         this.plugin = plugin;
         this.internalsProvider = internals;
 
@@ -65,6 +72,8 @@ public class PhantomStatsConsumer implements Consumer<Phantom> {
     @Override
     public void accept(Phantom phantom) {
         if (stats != null) {
+            assert internalsProvider != null;
+            assert plugin != null;
             try {
                 internalsProvider.applyPhantomStats(stats, phantom);
                 ConsoleMessage.debug(this.getClass(), plugin, "Applied PhantomStats.");
