@@ -8,9 +8,10 @@ import org.bukkit.entity.Phantom;
 import org.bukkit.loot.LootTable;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Consumer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Consumer;
+
 
 // thread safe due to no setters
 public class PhantomStatsConsumer implements Consumer<Phantom> {
