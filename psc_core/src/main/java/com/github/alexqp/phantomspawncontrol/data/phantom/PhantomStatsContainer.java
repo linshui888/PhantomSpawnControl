@@ -27,9 +27,9 @@ public class PhantomStatsContainer extends Observable implements Saveable {
     private final InternalsProvider internals;
     private final DataHandler dataHandler;
 
-    private PhantomLootTableContainer lootTableContainer;
+    private final PhantomLootTableContainer lootTableContainer;
 
-    private ConcurrentSkipListMap<Integer, PhantomStats> phantoms = new ConcurrentSkipListMap<>();
+    private final ConcurrentSkipListMap<Integer, PhantomStats> phantoms = new ConcurrentSkipListMap<>();
 
     public PhantomStatsContainer(@NotNull JavaPlugin plugin, @NotNull InternalsProvider internals) {
         this.plugin = plugin;
