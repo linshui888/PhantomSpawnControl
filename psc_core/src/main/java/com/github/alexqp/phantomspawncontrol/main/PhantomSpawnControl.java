@@ -49,7 +49,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
      *     - ESSENTIALS: /rest command support?
      */
 
-    private static final String defaultInternalsVersion = "v1_20_R1";
+    private static final String defaultInternalsVersion = "v1_20_R2";
     private static final String scoreboardObjectiveName = "PLUGIN_PSC";
 
     private static InternalsProvider internals;
