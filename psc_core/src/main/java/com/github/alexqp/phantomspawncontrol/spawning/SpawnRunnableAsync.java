@@ -3,6 +3,7 @@ package com.github.alexqp.phantomspawncontrol.spawning;
 import com.github.alexqp.commons.messages.ConsoleMessage;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsConsumer;
 import com.github.alexqp.phantomspawncontrol.events.PhantomPackSpawnEvent;
+import com.github.alexqp.phantomspawncontrol.main.InternalsProvider;
 import com.github.alexqp.phantomspawncontrol.spawning.algorithm.SpawnAlgorithmAsync;
 import com.github.alexqp.phantomspawncontrol.utility.SpawnCancelMsg;
 import com.github.alexqp.phantomspawncontrol.utility.WorldChecker;
@@ -25,16 +26,18 @@ import java.util.concurrent.ExecutionException;
 public class SpawnRunnableAsync extends BukkitRunnable {
 
     private static JavaPlugin plugin;
+    private static InternalsProvider internals;
     private static SpawnAlgorithmAsync spawnAlgorithm;
     private static Objective obj;
     private static WorldChecker worldChecker;
 
     private static ConcurrentHashMap<UUID, SpawnRunnableAsync> playerRunnables = new ConcurrentHashMap<>();
 
-    public static void initiateSpawnRunnables(@NotNull JavaPlugin plugin,
+    public static void initiateSpawnRunnables(@NotNull JavaPlugin plugin, @NotNull InternalsProvider internals,
                                               @NotNull SpawnAlgorithmAsync spawnAlgorithm, @NotNull Objective obj,
                                               @NotNull WorldChecker worldChecker) {
         SpawnRunnableAsync.plugin = plugin;
+        SpawnRunnableAsync.internals = internals;
         SpawnRunnableAsync.spawnAlgorithm = spawnAlgorithm;
         SpawnRunnableAsync.obj = obj;
         SpawnRunnableAsync.worldChecker = worldChecker;
@@ -138,7 +141,7 @@ public class SpawnRunnableAsync extends BukkitRunnable {
 
                 for (Location loc : phantoms.keySet()) {
                     ConsoleMessage.debug(this.getClass(), plugin, "Spawning phantom for player " + ConsoleMessage.getPlayerString(p) + "...");
-                    Phantom phantom = world.spawn(loc, Phantom.class, phantoms.get(loc));
+                    Phantom phantom = internals.spawnPhantom(world, loc, phantoms.get(loc));
                     phantom.setTarget(p);
                     phantomPack.add(phantom);
                 }

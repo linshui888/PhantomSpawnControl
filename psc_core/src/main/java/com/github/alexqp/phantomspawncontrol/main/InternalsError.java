@@ -8,7 +8,7 @@ public class InternalsError extends Exception {
         super(msg);
     }
 
-    InternalsError(String msg, String version) {
+    public InternalsError(String msg, String version) {
         this(msg);
         this.version = version;
     }

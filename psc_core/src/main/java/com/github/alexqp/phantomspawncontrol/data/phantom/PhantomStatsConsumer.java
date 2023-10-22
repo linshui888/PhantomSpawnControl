@@ -2,19 +2,18 @@ package com.github.alexqp.phantomspawncontrol.data.phantom;
 
 import com.github.alexqp.commons.config.ConsoleErrorType;
 import com.github.alexqp.commons.messages.ConsoleMessage;
+import com.github.alexqp.phantomspawncontrol.main.InternalsConsumer;
 import com.github.alexqp.phantomspawncontrol.main.InternalsError;
 import com.github.alexqp.phantomspawncontrol.main.InternalsProvider;
 import org.bukkit.entity.Phantom;
 import org.bukkit.loot.LootTable;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Consumer;
 import org.jetbrains.annotations.Nullable;
 
 
-
 // thread safe due to no setters
-public class PhantomStatsConsumer implements Consumer<Phantom> {
+public class PhantomStatsConsumer implements InternalsConsumer<Phantom> {
 
     private final JavaPlugin plugin;
     private final InternalsProvider internalsProvider;
@@ -52,10 +51,6 @@ public class PhantomStatsConsumer implements Consumer<Phantom> {
     public boolean hasStats() {
         return stats != null;
     }
-
-    /*public boolean hasLootTable() {
-        return stats != null && lootTable != null;
-    }*/
 
     @Override
     public String toString() {

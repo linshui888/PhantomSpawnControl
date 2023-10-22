@@ -84,6 +84,12 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
         for (String legacyVersion : legacyVersionPack) {
             internalsVersions.put(legacyVersion, "v1_19_R1");
         }
+
+        // needed to add InternalsProvider#spawnPhantom after v1_20_R1 (bukkit consumer changed to java consumer)
+        internalsVersions.put("v1_19_R2", "v1_20_R1");
+        internalsVersions.put("v1_19_R3", "v1_20_R1");
+        internalsVersions.put("v1_20_R1", "v1_20_R1");
+
         return internalsVersions.getOrDefault(internalsName, defaultInternalsVersion);
     }
 
@@ -146,6 +152,8 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
         this.reloadConfig();
         this.checkDebugMode();
 
+        ConsoleMessage.debug((Debugable) this, "Spigot NMS Version = " + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]);
+
         ConfigChecker configChecker = new ConfigChecker(this);
 
         ScoreboardManager scoreboardManager = Bukkit.getServer().getScoreboardManager();
@@ -205,7 +213,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
                         SpawnAlgorithmAsync spawnAlgorithm = SpawnAlgorithmAsync.build(this, section, scoreObjective, phantomStatsContainer, playerStatsContainer);
                         if (spawnAlgorithm != null) {
 
-                            SpawnRunnableAsync.initiateSpawnRunnables(this, spawnAlgorithm, scoreObjective, worldChecker);
+                            SpawnRunnableAsync.initiateSpawnRunnables(this, internals, spawnAlgorithm, scoreObjective, worldChecker);
                             ConsoleMessage.debug((Debugable) this, "Initiated SpawnRunnables.");
 
                             SpawnRunnableAsync.startRunnables(Bukkit.getServer().getOnlinePlayers());
@@ -214,7 +222,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
                 }
             }
 
-            PhantomCommand command = new PhantomCommand(this, playerStatsContainer, phantomStatsContainer);
+            PhantomCommand command = new PhantomCommand(this, internals, playerStatsContainer, phantomStatsContainer);
             command.register();
         }
 

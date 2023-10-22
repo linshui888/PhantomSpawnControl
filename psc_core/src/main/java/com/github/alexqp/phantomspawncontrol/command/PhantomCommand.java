@@ -11,6 +11,7 @@ import com.github.alexqp.phantomspawncontrol.command.giantPhantoms.GiantPhantoms
 import com.github.alexqp.phantomspawncontrol.command.lootTables.LootTablesSubCmd;
 import com.github.alexqp.phantomspawncontrol.data.phantom.PhantomStatsContainer;
 import com.github.alexqp.phantomspawncontrol.data.player.PlayerStatsContainer;
+import com.github.alexqp.phantomspawncontrol.main.InternalsProvider;
 import com.github.alexqp.phantomspawncontrol.main.PhantomSpawnControl;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -25,7 +26,7 @@ import java.util.Objects;
 
 public class PhantomCommand extends AlexCommand {
 
-    public PhantomCommand(@NotNull PhantomSpawnControl plugin, @NotNull PlayerStatsContainer playerStatsContainer, @Nullable PhantomStatsContainer phantomStatsContainer) {
+    public PhantomCommand(@NotNull PhantomSpawnControl plugin, @NotNull InternalsProvider internals, @NotNull PlayerStatsContainer playerStatsContainer, @Nullable PhantomStatsContainer phantomStatsContainer) {
         super("phantomspawncontrol", plugin, ChatColor.AQUA);
         this.setPermission(this.getPermission() + ".cmd");
 
@@ -55,7 +56,7 @@ public class PhantomCommand extends AlexCommand {
             subCmds.add(this.buildToggleCmd(configChecker, msgSection, playerStatsContainer, noPlayerMsg));
             subCmds.add(this.buildPlayerStatsCmd(configChecker, msgSection, playerStatsContainer, noPlayerMsg));
             if (phantomStatsContainer != null) {
-                subCmds.add(new GiantPhantomsSubCmd(this, plugin, phantomStatsContainer));
+                subCmds.add(new GiantPhantomsSubCmd(this, plugin, internals, phantomStatsContainer));
                 subCmds.add(new LootTablesSubCmd(this, plugin, phantomStatsContainer));
             }
 

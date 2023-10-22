@@ -21,6 +21,7 @@
         <module>psc_core</module>
         <module>psc_dist</module>
         <module>psc_craftbukkit_1_19_R1</module>
+        <module>psc_craftbukkit_1_20_R1</module>
     </modules>
 
     <repositories>
