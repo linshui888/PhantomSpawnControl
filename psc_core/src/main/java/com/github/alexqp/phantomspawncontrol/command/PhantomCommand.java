@@ -35,7 +35,7 @@ public class PhantomCommand extends AlexCommand {
         if (msgSection != null) {
             String prefix = configChecker.checkString(msgSection, "prefix", ConsoleErrorType.WARN, "");
             assert prefix != null;
-            if (!prefix.isEmpty())
+            if (!prefix.equals("default"))
                 this.setPrefix(MessageTranslator.translateBukkitColorCodes(prefix));
             String noPermLine = configChecker.checkString(msgSection, "noPerm", ConsoleErrorType.WARN, "&4You do not have permission.");
             assert noPermLine != null;

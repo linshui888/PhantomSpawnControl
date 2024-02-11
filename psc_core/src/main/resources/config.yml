@@ -120,7 +120,7 @@ playerdata_prevent_targeting: false
 messages:
   cmd:
     # This is the prefix of all command message outputs. An empty string will result in the default prefix.
-    prefix: ""
+    prefix: "default"
     credits: "Use /psc help for all available commands."
     noPerm: "&4You do not have permission."
     wrongCmdUsagePrefix: "&CUsage:"
