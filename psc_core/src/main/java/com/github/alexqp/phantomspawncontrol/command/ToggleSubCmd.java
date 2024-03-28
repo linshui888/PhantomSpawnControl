@@ -3,6 +3,7 @@ package com.github.alexqp.phantomspawncontrol.command;
 import com.github.alexqp.commons.command.AlexSubCommand;
 import com.github.alexqp.commons.messages.MessageTranslator;
 import com.github.alexqp.phantomspawncontrol.data.player.PlayerStatsContainer;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -13,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ToggleSubCmd extends AlexSubCommand {
 
@@ -23,6 +26,18 @@ public class ToggleSubCmd extends AlexSubCommand {
     private final BaseComponent noPlayerMsg;
 
     private final PlayerStatsContainer container;
+
+    public static String hex(String message) {
+        Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+        Matcher matcher = pattern.matcher(message);
+
+        while (matcher.find()) {
+            String color = message.substring(matcher.start(), matcher.end());
+            message = message.replace(color, ChatColor.of(color) + "");
+            matcher = pattern.matcher(message);
+        }
+        return message;
+    }
 
     ToggleSubCmd(@NotNull TextComponent helpLine, @NotNull AlexSubCommand parent,
                  @NotNull String enable, @NotNull String disable, @NotNull BaseComponent[] noPlayerMsg,
@@ -64,9 +79,9 @@ public class ToggleSubCmd extends AlexSubCommand {
         }
 
         if (container.getPlayerStats(p.getUniqueId()).toggleAllowPhantomSpawn())
-            sendMessage(sender, this.getPrefixMessage(new ComponentBuilder().append(MessageTranslator.translateBukkitColorCodes(enable.replace("%player%", p.getName()))).create()));
+            sendMessage(sender, this.getPrefixMessage(new ComponentBuilder().append(MessageTranslator.translateBukkitColorCodes(hex(enable.replace("%player%", p.getName())))).create()));
         else
-            sendMessage(sender, this.getPrefixMessage(new ComponentBuilder().append(MessageTranslator.translateBukkitColorCodes(disable.replace("%player%", p.getName()))).create()));
+            sendMessage(sender, this.getPrefixMessage(new ComponentBuilder().append(MessageTranslator.translateBukkitColorCodes(hex(disable.replace("%player%", p.getName())))).create()));
         return true;
     }
 
