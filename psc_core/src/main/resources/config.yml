@@ -119,7 +119,7 @@ playerdata_prevent_targeting: false
 # Configure nearly all messages. toggle.enable and toggle.disable support the placeholder %player% for the player name.
 messages:
   cmd:
-    # This is the prefix of all command message outputs. An empty string will result in the default prefix.
+    # This is the prefix of all command message outputs. Setting this to "default" will result in the default prefix.
     prefix: "default"
     credits: "Use /psc help for all available commands."
     noPerm: "&4You do not have permission."
