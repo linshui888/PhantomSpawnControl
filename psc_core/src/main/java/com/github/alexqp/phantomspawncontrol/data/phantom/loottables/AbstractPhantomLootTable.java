@@ -15,9 +15,6 @@ public class AbstractPhantomLootTable implements ConfigurationSerializableChecka
 
     private static String[] configNames = {"children", "loot"};
 
-    //private boolean considerFortune = false; // TODO future version
-    //private int exp = 0; // TODO future version
-
     private HashSet<String> children = new HashSet<>();
     private final Object childrenLock = new Object();
 
