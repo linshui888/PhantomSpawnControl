@@ -12,4 +12,4 @@ Information
 
 Source
 ------
-Source code is not available and will not be until I feel like I cannot maintain it anymore due to time limitations or motivation. In other words: Do not wait for it to be published. 
+Source Code is currently available on [GitHub](https://github.com/Alex39099/PhantomSpawnControl).
