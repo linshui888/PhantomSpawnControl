@@ -32,7 +32,6 @@ public class PhantomLootTableListener implements Listener {
                         e.getDrops().addAll(((PhantomLootTable) Objects.requireNonNull(metadataValue.value())).populateLoot(new Random(), lootContext.build()));
                     }
                 }
-
             }
         }
     }
