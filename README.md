@@ -12,4 +12,9 @@ Information
 
 Source
 ------
-Source Code is currently available on [GitHub](https://github.com/Alex39099/PhantomSpawnControl).
+Source Code is currently available on [GitHub](https://github.com/Alex39099/PhantomSpawnControl). Please respect the license.
+
+Contributing
+------
+If you contribute something via pull requests and do not get an answer from me, please [contact me via Spigot](https://www.spigotmc.org/resources/authors/alex_qp.306806/). Significant contributing (judged by me) will result in a reference also on Spigot.
+
