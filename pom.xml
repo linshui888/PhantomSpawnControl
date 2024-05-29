@@ -37,10 +37,10 @@
     </properties>
 
     <modules>
-        <module>psc_core</module>
-        <module>psc_dist</module>
-        <module>psc_craftbukkit_1_19_R1</module>
-        <module>psc_craftbukkit_1_20_R1</module>
+        <module>psc-core</module>
+        <module>psc-dist</module>
+        <module>psc-internals_1_19_2</module>
+        <module>psc-internals_1_20_1</module>
     </modules>
 
     <repositories>
