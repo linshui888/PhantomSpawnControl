@@ -72,6 +72,7 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
     static {
         try {
             String packageName = PhantomSpawnControl.class.getPackage().getName();
+            Bukkit.getConsoleSender().sendMessage("BUKKIT VERSION = " + Bukkit.getServer().getBukkitVersion());
             String minecraftVersion = Bukkit.getServer().getBukkitVersion().split("-")[0];
             String internalsName = getInternalsName(minecraftVersion);
             if (defaultInternalsVersion.equals(internalsName)) {
@@ -158,8 +159,6 @@ public class PhantomSpawnControl extends JavaPlugin implements Debugable {
         this.saveDefaultConfig();
         this.reloadConfig();
         this.checkDebugMode();
-
-        ConsoleMessage.debug((Debugable) this, "Spigot NMS Version = " + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]);
 
         ConfigChecker configChecker = new ConfigChecker(this);
 
