@@ -24,7 +24,7 @@
 
     <groupId>me.alexqp</groupId>
     <artifactId>phantomspawncontrol-parent</artifactId>
-    <version>4.17.0</version>
+    <version>4.18.0</version>
     <name>PhantomSpawnControl</name>
     <url>https://www.spigotmc.org/members/alex_qp.306806/</url>
     <description>This plugin provides the ability to control phantom spawning.</description>
