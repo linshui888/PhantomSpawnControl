@@ -24,16 +24,16 @@
 
     <groupId>me.alexqp</groupId>
     <artifactId>phantomspawncontrol-parent</artifactId>
-    <version>4.18.0</version>
+    <version>4.18.1</version>
     <name>PhantomSpawnControl</name>
     <url>https://www.spigotmc.org/members/alex_qp.306806/</url>
     <description>This plugin provides the ability to control phantom spawning.</description>
     <packaging>pom</packaging>
     <properties>
         <buildNo/>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
     </properties>
 
     <modules>
